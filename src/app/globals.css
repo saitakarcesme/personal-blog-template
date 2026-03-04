@@ -1,8 +1,47 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+:root,
+[data-theme="default"] {
+  --background: linear-gradient(135deg, #0a0a0c 0%, #0f1018 25%, #0a1225 50%, #140818 75%, #0a0a0c 100%);
+  --background-size: 400% 400%;
+  --background-animation: gradient-flow 12s ease-in-out infinite;
+  --foreground: #ededed;
+}
+
+[data-theme="midnight-ocean"] {
+  --background: linear-gradient(135deg, #040d1a 0%, #0c1929 30%, #0a1f3a 60%, #061224 100%);
+  --background-size: 400% 400%;
+  --background-animation: gradient-flow 18s ease-in-out infinite;
+  --foreground: #c9e2f5;
+}
+
+[data-theme="dracula"] {
+  --background: #282a36;
+  --background-size: auto;
+  --background-animation: none;
+  --foreground: #f8f8f2;
+}
+
+[data-theme="solarized"] {
+  --background: #002b36;
+  --background-size: auto;
+  --background-animation: none;
+  --foreground: #93a1a1;
+}
+
+[data-theme="rose-pine"] {
+  --background: linear-gradient(145deg, #191724 0%, #1f1d2e 50%, #191724 100%);
+  --background-size: 300% 300%;
+  --background-animation: gradient-flow 20s ease-in-out infinite;
+  --foreground: #e0def4;
+}
+
+[data-theme="catppuccin"] {
+  --background: #1e1e2e;
+  --background-size: auto;
+  --background-animation: none;
+  --foreground: #cdd6f4;
 }
 
 @theme inline {
@@ -12,15 +51,74 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@keyframes gradient-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes cursor-orbit {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes cursor-orbit-rev {
+  from {
+    transform: rotate(360deg);
+  }
+
+  to {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes cursor-pulse {
+
+  0%,
+  100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 0.9;
+    transform: scale(1.4);
   }
 }
 
 body {
+  min-height: 100dvh;
   background: var(--background);
+  background-size: var(--background-size, auto);
+  animation: var(--background-animation, none);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  transition: background 0.4s ease, color 0.3s ease;
+}
+
+/* Hide scrollbar while keeping scroll behavior */
+.scrollbar-hide {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Improve default typography + selection on dark backgrounds */
+::selection {
+  background: rgba(99, 102, 241, 0.35);
 }
