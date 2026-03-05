@@ -19,7 +19,7 @@ export default async function PostPage({
 
   return (
     <div className="min-h-dvh text-foreground">
-      <main className="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8">
+      <main className="mx-auto max-w-3xl px-4 pt-24 pb-10 min-[1300px]:py-10 sm:px-6 lg:px-8">
         <BackButton />
 
         <header className="mt-8">

@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useCallback } from "react";
+import { useThemeClasses } from "./useThemeClasses";
 
 // The size of the playfield
 const ROWS = 14;
@@ -85,6 +86,7 @@ const createEmptyBoard = () =>
     Array.from(Array(ROWS), () => new Array(COLS).fill([0, "clear"]));
 
 export function TetrisGame() {
+    const tc = useThemeClasses();
     const [board, setBoard] = useState(createEmptyBoard());
     const [player, setPlayer] = useState({
         pos: { x: 0, y: 0 },
@@ -332,9 +334,53 @@ export function TetrisGame() {
 
 
 
-            <p className="mt-4 text-[10px] text-white/40 uppercase tracking-widest text-center">
+            <p className="mt-4 text-[10px] text-white/40 uppercase tracking-widest text-center hidden sm:block">
                 Arrows to Move & Rotate
             </p>
+
+            {/* Mobile Touch Controller (Theme Based) */}
+            <div className={`mt-8 relative w-[200px] h-[200px] flex items-center justify-center sm:hidden touch-none select-none rounded-3xl ${tc.card}`}>
+
+                {/* UP */}
+                <div className="absolute top-4 left-1/2 -translate-x-1/2 flex flex-col items-center">
+                    <button
+                        onPointerDown={(e) => { e.preventDefault(); if (playing && !gameOver) rotatePlayer(); }}
+                        className={`flex items-center justify-center w-[52px] h-[52px] rounded-full shadow-[6px_6px_10px_rgba(0,0,0,0.6),-4px_-4px_8px_rgba(255,255,255,0.05),inset_2px_2px_5px_rgba(255,255,255,0.08),inset_-3px_-3px_7px_rgba(0,0,0,0.8)] active:shadow-[inset_4px_4px_8px_rgba(0,0,0,0.8),inset_-2px_-2px_6px_rgba(255,255,255,0.02)] transition-shadow duration-75 ${tc.gameBtn}`}
+                    >
+                        <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-b-[8px] border-l-transparent border-r-transparent border-b-[#000000] opacity-80 shadow-[0_2px_2px_rgba(255,255,255,0.1)] mb-1" />
+                    </button>
+                </div>
+
+                {/* LEFT */}
+                <div className="absolute top-1/2 left-4 -translate-y-1/2 flex flex-col items-center">
+                    <button
+                        onPointerDown={(e) => { e.preventDefault(); if (playing && !gameOver) movePlayer(-1); }}
+                        className={`flex items-center justify-center w-[52px] h-[52px] rounded-full shadow-[6px_6px_10px_rgba(0,0,0,0.6),-4px_-4px_8px_rgba(255,255,255,0.05),inset_2px_2px_5px_rgba(255,255,255,0.08),inset_-3px_-3px_7px_rgba(0,0,0,0.8)] active:shadow-[inset_4px_4px_8px_rgba(0,0,0,0.8),inset_-2px_-2px_6px_rgba(255,255,255,0.02)] transition-shadow duration-75 ${tc.gameBtn}`}
+                    >
+                        <div className="w-0 h-0 border-t-[6px] border-b-[6px] border-r-[8px] border-t-transparent border-b-transparent border-r-[#000000] opacity-80 shadow-[2px_0_2px_rgba(255,255,255,0.1)] mr-1" />
+                    </button>
+                </div>
+
+                {/* RIGHT */}
+                <div className="absolute top-1/2 right-4 -translate-y-1/2 flex flex-col items-center">
+                    <button
+                        onPointerDown={(e) => { e.preventDefault(); if (playing && !gameOver) movePlayer(1); }}
+                        className={`flex items-center justify-center w-[52px] h-[52px] rounded-full shadow-[6px_6px_10px_rgba(0,0,0,0.6),-4px_-4px_8px_rgba(255,255,255,0.05),inset_2px_2px_5px_rgba(255,255,255,0.08),inset_-3px_-3px_7px_rgba(0,0,0,0.8)] active:shadow-[inset_4px_4px_8px_rgba(0,0,0,0.8),inset_-2px_-2px_6px_rgba(255,255,255,0.02)] transition-shadow duration-75 ${tc.gameBtn}`}
+                    >
+                        <div className="w-0 h-0 border-t-[6px] border-b-[6px] border-l-[8px] border-t-transparent border-b-transparent border-l-[#000000] opacity-80 shadow-[-2px_0_2px_rgba(255,255,255,0.1)] ml-1" />
+                    </button>
+                </div>
+
+                {/* DOWN */}
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex flex-col items-center">
+                    <button
+                        onPointerDown={(e) => { e.preventDefault(); if (playing && !gameOver) dropPlayer(); }}
+                        className={`flex items-center justify-center w-[52px] h-[52px] rounded-full shadow-[6px_6px_10px_rgba(0,0,0,0.6),-4px_-4px_8px_rgba(255,255,255,0.05),inset_2px_2px_5px_rgba(255,255,255,0.08),inset_-3px_-3px_7px_rgba(0,0,0,0.8)] active:shadow-[inset_4px_4px_8px_rgba(0,0,0,0.8),inset_-2px_-2px_6px_rgba(255,255,255,0.02)] transition-shadow duration-75 ${tc.gameBtn}`}
+                    >
+                        <div className="w-0 h-0 border-l-[6px] border-r-[6px] border-t-[8px] border-l-transparent border-r-transparent border-t-[#000000] opacity-80 shadow-[0_-2px_2px_rgba(255,255,255,0.1)] mt-1" />
+                    </button>
+                </div>
+            </div>
         </div>
     );
 }

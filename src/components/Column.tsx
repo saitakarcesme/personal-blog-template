@@ -18,7 +18,7 @@ export function Column({
 
   const baseClass = tc.card;
   const sectionClass = scrollable
-    ? `${baseClass} flex min-h-0 flex-col overflow-hidden ${className ?? ""}`
+    ? `${baseClass} flex min-[1300px]:min-h-0 flex-col min-[1300px]:overflow-hidden ${className ?? ""}`
     : `${baseClass} ${className ?? ""}`;
 
   return (
@@ -29,7 +29,7 @@ export function Column({
         </h2>
       ) : null}
       {scrollable ? (
-        <div className="scrollbar-hide min-h-0 flex-1 overflow-y-auto">
+        <div className="scrollbar-hide min-[1300px]:min-h-0 flex-1 min-[1300px]:overflow-y-auto">
           {children}
         </div>
       ) : (

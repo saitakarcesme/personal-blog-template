@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { CursorDots } from "@/components/CursorDots";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
+import { MobileProfileButton } from "@/components/MobileProfileButton";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -38,6 +39,7 @@ export default function RootLayout({
           {children}
           <CursorDots />
           <ThemeSwitcher />
+          <MobileProfileButton />
         </ThemeProvider>
       </body>
     </html>

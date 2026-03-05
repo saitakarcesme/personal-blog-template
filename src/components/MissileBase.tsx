@@ -154,7 +154,7 @@ export function MissileBase() {
             <div
                 ref={baseRef}
                 onClick={() => setActive((prev) => !prev)}
-                className="fixed bottom-4 left-4 z-50 flex h-10 w-12 cursor-pointer flex-col items-center justify-end rounded-t flex-col-reverse group transition-transform hover:scale-110"
+                className="fixed bottom-4 left-4 z-50 hidden sm:flex h-10 w-12 cursor-pointer flex-col items-center justify-end rounded-t flex-col-reverse group transition-transform hover:scale-110"
                 title={active ? "Missile base ACTIVE — click to deactivate" : "Missile base INACTIVE — click to activate"}
             >
                 {/* Base Platform */}

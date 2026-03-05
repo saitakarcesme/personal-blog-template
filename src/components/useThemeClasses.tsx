@@ -10,6 +10,7 @@ type ThemeClasses = {
     textMuted: string;
     textSubtle: string;
     socialBtn: string;
+    gameBtn: string;
     accent: string;
     ring: string;
     selection: string;
@@ -25,6 +26,7 @@ const themes: Record<Theme, ThemeClasses> = {
         textMuted: "text-white/60",
         textSubtle: "text-white/50",
         socialBtn: "border border-white/10 bg-black/20 text-white/80 hover:border-white/20 hover:bg-white/[0.06] hover:text-white",
+        gameBtn: "bg-[#222428] border border-white/5",
         accent: "text-indigo-400",
         ring: "ring-1 ring-white/15",
         selection: "selection:bg-indigo-500/35",
@@ -40,6 +42,7 @@ const themes: Record<Theme, ThemeClasses> = {
         textMuted: "text-sky-200/70",
         textSubtle: "text-sky-300/50",
         socialBtn: "border border-sky-800/50 bg-[#0a1525]/60 text-sky-200 hover:border-amber-500/40 hover:bg-amber-500/10 hover:text-amber-300",
+        gameBtn: "bg-[#0a1525]/80 border border-sky-900/40",
         accent: "text-amber-400",
         ring: "ring-1 ring-sky-800/50",
         selection: "selection:bg-amber-500/30",
@@ -55,6 +58,7 @@ const themes: Record<Theme, ThemeClasses> = {
         textMuted: "text-[#f8f8f2]/70",
         textSubtle: "text-[#6272a4]",
         socialBtn: "border border-[#6272a4]/40 bg-[#21222c]/80 text-[#f8f8f2] hover:border-[#ff79c6]/50 hover:bg-[#ff79c6]/10 hover:text-[#ff79c6]",
+        gameBtn: "bg-[#21222c] border border-[#6272a4]/30",
         accent: "text-[#50fa7b]",
         ring: "ring-1 ring-[#6272a4]/50",
         selection: "selection:bg-[#bd93f9]/30",
@@ -70,6 +74,7 @@ const themes: Record<Theme, ThemeClasses> = {
         textMuted: "text-[#839496]",
         textSubtle: "text-[#657b83]",
         socialBtn: "border border-[#073642] bg-[#073642]/60 text-[#93a1a1] hover:border-[#268bd2]/50 hover:bg-[#268bd2]/10 hover:text-[#268bd2]",
+        gameBtn: "bg-[#002b36] border border-[#073642]",
         accent: "text-[#268bd2]",
         ring: "ring-1 ring-[#073642]",
         selection: "selection:bg-[#268bd2]/25",
@@ -85,6 +90,7 @@ const themes: Record<Theme, ThemeClasses> = {
         textMuted: "text-[#908caa]",
         textSubtle: "text-[#6e6a86]",
         socialBtn: "border border-[#26233a] bg-[#191724]/70 text-[#e0def4] hover:border-[#ebbcba]/40 hover:bg-[#ebbcba]/10 hover:text-[#ebbcba]",
+        gameBtn: "bg-[#191724] border border-[#26233a]",
         accent: "text-[#ebbcba]",
         ring: "ring-1 ring-[#26233a]",
         selection: "selection:bg-[#c4a7e7]/25",
@@ -100,6 +106,7 @@ const themes: Record<Theme, ThemeClasses> = {
         textMuted: "text-[#a6adc8]",
         textSubtle: "text-[#6c7086]",
         socialBtn: "border border-[#313244] bg-[#181825]/70 text-[#cdd6f4] hover:border-[#f5c2e7]/40 hover:bg-[#f5c2e7]/10 hover:text-[#f5c2e7]",
+        gameBtn: "bg-[#181825] border border-[#313244]",
         accent: "text-[#f38ba8]",
         ring: "ring-1 ring-[#313244]",
         selection: "selection:bg-[#cba6f7]/25",

@@ -83,7 +83,7 @@ export function CursorDots() {
 
   return (
     <div
-      className="pointer-events-none fixed inset-0 z-[9999] select-none"
+      className="pointer-events-none fixed inset-0 z-[9999] select-none hidden sm:block"
       aria-hidden
     >
       {trail.map((point, i) => {
