@@ -10,8 +10,8 @@ export default function PostsPage() {
         <div className="min-h-dvh text-foreground">
             <main className="mx-auto max-w-3xl px-4 pt-24 pb-10 min-[1300px]:py-10 sm:px-6 lg:px-8">
                 <BackButton />
-                <header className="mt-8 mb-8">
-                    <h1 className="text-balance text-2xl font-semibold tracking-tight sm:text-3xl">
+                <header className="mt-8 mb-8 text-center">
+                    <h1 className="text-balance text-4xl font-bold tracking-tight text-text-main font-serif">
                         All Posts
                     </h1>
                 </header>

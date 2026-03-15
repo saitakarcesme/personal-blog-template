@@ -2,43 +2,50 @@
 
 import React, { createContext, useContext, useEffect, useState } from "react";
 
-export type Theme =
-    | "default"
-    | "midnight-ocean"
-    | "dracula"
-    | "solarized"
-    | "rose-pine"
-    | "catppuccin";
+export type Theme = "light" | "dark";
 
 interface ThemeContextType {
     theme: Theme;
-    setTheme: (theme: Theme) => void;
+    toggleTheme: () => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-    const [theme, setThemeState] = useState<Theme>("default");
+    const [theme, setThemeState] = useState<Theme>("light");
+    const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
+        setMounted(true);
+        // Check local storage or system preference
         const savedTheme = localStorage.getItem("app-theme") as Theme | null;
         if (savedTheme) {
-            setThemeState(savedTheme);
-            document.documentElement.setAttribute("data-theme", savedTheme);
+            applyTheme(savedTheme);
         } else {
-            document.documentElement.setAttribute("data-theme", "default");
+            const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+            applyTheme(prefersDark ? "dark" : "light");
         }
     }, []);
 
-    const setTheme = (newTheme: Theme) => {
+    const applyTheme = (newTheme: Theme) => {
         setThemeState(newTheme);
         localStorage.setItem("app-theme", newTheme);
-        document.documentElement.setAttribute("data-theme", newTheme);
+        if (newTheme === "dark") {
+            document.documentElement.setAttribute("data-theme", "dark");
+        } else {
+            document.documentElement.removeAttribute("data-theme");
+        }
+    };
+
+    const toggleTheme = () => {
+        applyTheme(theme === "light" ? "dark" : "light");
     };
 
     return (
-        <ThemeContext.Provider value={{ theme, setTheme }}>
-            {children}
+        <ThemeContext.Provider value={{ theme, toggleTheme }}>
+            <div style={{ visibility: mounted ? "visible" : "hidden" }}>
+                {children}
+            </div>
         </ThemeContext.Provider>
     );
 }

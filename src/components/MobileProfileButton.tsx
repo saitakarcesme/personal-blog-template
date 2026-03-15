@@ -3,11 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useThemeClasses } from "./useThemeClasses";
 
 export function MobileProfileButton() {
     const pathname = usePathname();
-    const tc = useThemeClasses();
 
     // Don't show on the profile page itself
     if (pathname === "/profile") return null;
@@ -16,7 +14,7 @@ export function MobileProfileButton() {
         <div className="fixed top-4 left-4 z-[9999] min-[1300px]:hidden">
             <Link
                 href="/profile"
-                className={`flex items-center justify-center w-12 h-12 rounded-full overflow-hidden shadow-lg transition-transform hover:scale-105 ${tc.ring}`}
+                className="flex items-center justify-center w-12 h-12 rounded-full overflow-hidden shadow-lg transition-transform hover:scale-105 ring-2 ring-border"
             >
                 <Image
                     src="/profilepic.jpeg"

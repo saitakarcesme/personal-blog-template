@@ -1,111 +1,73 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-:root,
-[data-theme="default"] {
-  --background: linear-gradient(135deg, #0a0a0c 0%, #0f1018 25%, #0a1225 50%, #140818 75%, #0a0a0c 100%);
-  --background-size: 400% 400%;
-  --background-animation: gradient-flow 12s ease-in-out infinite;
+:root {
+  /* LIGHT MODE (Editorial, clean, high contrast readability) */
+  --background: #ffffff;
+  --foreground: #1c1c1c;
+
+  /* Surfaces & Cards */
+  --surface: #f9f9f9;
+  --surface-hover: #f1f1f1;
+  --border: #e6e6e6;
+  --ring: rgba(0, 0, 0, 0.05);
+
+  /* Typography Hierarchy */
+  --text-main: #1c1c1c;
+  /* Strongest reading text */
+  --text-muted: #555555;
+  /* Subtitles, secondary info */
+  --text-subtle: #888888;
+  /* Meta, dates, tiny helper text */
+
+  /* Accents */
+  --accent: #242424;
+}
+
+:root[data-theme="dark"] {
+  /* DARK MODE (Intentionally designed, deep calm grays, not pure black) */
+  --background: #111111;
   --foreground: #ededed;
-}
 
-[data-theme="midnight-ocean"] {
-  --background: linear-gradient(135deg, #040d1a 0%, #0c1929 30%, #0a1f3a 60%, #061224 100%);
-  --background-size: 400% 400%;
-  --background-animation: gradient-flow 18s ease-in-out infinite;
-  --foreground: #c9e2f5;
-}
+  /* Surfaces & Cards */
+  --surface: #1a1a1a;
+  --surface-hover: #222222;
+  --border: #2a2a2a;
+  --ring: rgba(255, 255, 255, 0.05);
 
-[data-theme="dracula"] {
-  --background: #282a36;
-  --background-size: auto;
-  --background-animation: none;
-  --foreground: #f8f8f2;
-}
+  /* Typography Hierarchy */
+  --text-main: #ededed;
+  --text-muted: #a0a0a0;
+  --text-subtle: #6b6b6b;
 
-[data-theme="solarized"] {
-  --background: #002b36;
-  --background-size: auto;
-  --background-animation: none;
-  --foreground: #93a1a1;
-}
-
-[data-theme="rose-pine"] {
-  --background: linear-gradient(145deg, #191724 0%, #1f1d2e 50%, #191724 100%);
-  --background-size: 300% 300%;
-  --background-animation: gradient-flow 20s ease-in-out infinite;
-  --foreground: #e0def4;
-}
-
-[data-theme="catppuccin"] {
-  --background: #1e1e2e;
-  --background-size: auto;
-  --background-animation: none;
-  --foreground: #cdd6f4;
+  /* Accents */
+  --accent: #d4d4d4;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+
+  --color-text-main: var(--text-main);
+  --color-text-muted: var(--text-muted);
+  --color-text-subtle: var(--text-subtle);
+  --color-accent: var(--accent);
+
   --font-sans: var(--font-geist-sans);
+  --font-serif: var(--font-newsreader);
   --font-mono: var(--font-geist-mono);
-}
-
-@keyframes gradient-flow {
-  0% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-@keyframes cursor-orbit {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-}
-
-@keyframes cursor-orbit-rev {
-  from {
-    transform: rotate(360deg);
-  }
-
-  to {
-    transform: rotate(0deg);
-  }
-}
-
-@keyframes cursor-pulse {
-
-  0%,
-  100% {
-    opacity: 0.5;
-    transform: scale(1);
-  }
-
-  50% {
-    opacity: 0.9;
-    transform: scale(1.4);
-  }
 }
 
 body {
   min-height: 100dvh;
   background: var(--background);
-  background-size: var(--background-size, auto);
-  animation: var(--background-animation, none);
   color: var(--foreground);
-  transition: background 0.4s ease, color 0.3s ease;
+  font-family: var(--font-sans);
+  transition: background 0.3s ease, color 0.3s ease;
 }
 
 /* Hide scrollbar while keeping scroll behavior */
@@ -118,7 +80,17 @@ body {
   display: none;
 }
 
-/* Improve default typography + selection on dark backgrounds */
 ::selection {
-  background: rgba(99, 102, 241, 0.35);
+  background: rgba(100, 100, 100, 0.2);
+}
+
+/* Base Heading Overrides pointing to our custom utility */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-serif);
+  color: var(--text-main);
 }

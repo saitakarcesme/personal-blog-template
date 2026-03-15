@@ -1,23 +1,20 @@
 "use client";
 
 import Link from "next/link";
-import { projects } from "../../data/projects";
-import { useThemeClasses } from "./useThemeClasses";
+import type { ProjectListItem } from "@/lib/projects";
 
-export function ProjectList({ limitOnMobile }: { limitOnMobile?: boolean } = {}) {
-    const tc = useThemeClasses();
-
+export function ProjectList({ projects, limitOnMobile }: { projects: ProjectListItem[]; limitOnMobile?: boolean }) {
     if (projects.length === 0) {
-        return <p className={`text-sm ${tc.textMuted}`}>No projects yet.</p>;
+        return <p className="text-sm text-text-muted">No projects yet.</p>;
     }
 
     return (
         <>
-            <div className="flex flex-col gap-3 pr-2">
+            <div className="flex flex-col gap-3">
                 {projects.map((p, i) => (
-                    <Link key={i} href={p.githubUrl} target="_blank" rel="noopener noreferrer" className={limitOnMobile && i > 0 ? "hidden sm:block" : ""}>
-                        <div className={`flex items-center justify-center p-4 ${tc.listItem}`}>
-                            <h3 className={`text-sm font-medium ${tc.text}`}>{p.title}</h3>
+                    <Link key={p.slug} href={`/projects/${p.slug}`} className={`group ${limitOnMobile && i > 0 ? "hidden sm:block" : ""}`}>
+                        <div className="flex items-center justify-start p-4 rounded-xl border border-border bg-surface-hover/30 hover:bg-surface-hover transition-colors">
+                            <h3 className="text-sm font-semibold text-text-main font-serif group-hover:underline">{p.title}</h3>
                         </div>
                     </Link>
                 ))}
@@ -26,7 +23,7 @@ export function ProjectList({ limitOnMobile }: { limitOnMobile?: boolean } = {})
                 <div className="mt-4 sm:hidden">
                     <Link
                         href="/projects"
-                        className={`text-sm underline underline-offset-4 hover:opacity-80 ${tc.text}`}
+                        className="text-sm underline underline-offset-4 hover:opacity-80 text-text-main"
                     >
                         View all projects
                     </Link>
