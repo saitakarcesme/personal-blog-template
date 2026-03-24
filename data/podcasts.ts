@@ -12,13 +12,14 @@ export type PodcastEpisode = {
  * The homepage will automatically render them in ascending episode order.
  */
 export const podcastEpisodes: PodcastEpisode[] = [
+
+
+
   {
     episode: 1,
-    title: "Episode 1 — Welcome",
-    youtubeUrl: "https://www.youtube.com/watch?v=bA6A-MzzMtY",
-    date: "2026-01-01",
+    title: "Just Building Things: The Start of the ISA Podcast",
+    youtubeUrl: "https://www.youtube.com/watch?v=E_3HTrJFdEQ",
+    date: "2026-03-24",
   },
-
-
 ];
 
