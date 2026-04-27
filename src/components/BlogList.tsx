@@ -14,6 +14,12 @@ export function BlogList({ posts, limitOnMobile }: { posts: PostListItem[]; limi
         {posts.map((post, index) => (
           <li key={post.slug} className={`min-w-0 ${limitOnMobile && index > 0 ? "hidden sm:block" : ""}`}>
             <article className="relative min-w-0 group pb-6 border-b border-border last:border-0 last:pb-0">
+              {post.coverImage && (
+                <div className="mb-4 aspect-[2/1] w-full overflow-hidden rounded-xl border border-border bg-surface flex-shrink-0">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={post.coverImage} alt={post.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                </div>
+              )}
               <div className="flex min-w-0 flex-col gap-1">
                 <div className="flex items-baseline justify-between gap-4 mb-1">
                   <h3 className="min-w-0 flex-1 text-xl font-bold text-text-main font-serif tracking-tight">

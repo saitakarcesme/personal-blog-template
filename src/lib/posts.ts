@@ -11,6 +11,7 @@ export type PostFrontmatter = {
   title: string;
   date: string; // YYYY-MM-DD
   author?: string;
+  image?: string;
 };
 
 export type PostListItem = {
@@ -20,6 +21,7 @@ export type PostListItem = {
   author?: string;
   excerpt: string;
   hasMore: boolean;
+  coverImage?: string | null;
 };
 
 export type PostDetail = {
@@ -65,6 +67,11 @@ function buildExcerpt(markdownContent: string, maxChars = 400) {
   return { excerpt: `${trimmed}…`, hasMore: true };
 }
 
+function extractFirstImage(markdownContent: string): string | null {
+  const match = markdownContent.match(/!\[.*?\]\((.*?)\)/);
+  return match ? match[1] : null;
+}
+
 export function getAllPosts(): PostListItem[] {
   const slugs = getPostSlugs();
 
@@ -80,8 +87,9 @@ export function getAllPosts(): PostListItem[] {
       const date = fm.date ?? "1970-01-01";
       const author = fm.author;
       const { excerpt, hasMore } = buildExcerpt(content);
+      const coverImage = fm.image || extractFirstImage(content);
 
-      return { slug, title, date, author, excerpt, hasMore };
+      return { slug, title, date, author, excerpt, hasMore, coverImage };
     })
     .sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
 

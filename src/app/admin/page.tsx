@@ -23,14 +23,22 @@ export default function AdminDashboard() {
                 Manage your content locally. Changes are saved instantly to the filesystem.
             </p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 w-full max-w-3xl mt-12 px-4">
-                <Link href="/admin/posts/new" className="group relative flex flex-col items-center justify-center gap-3 p-8 rounded-2xl border border-border bg-surface-hover/30 hover:bg-surface-hover transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
-                    <div className="w-12 h-12 rounded-full bg-accent/10 text-accent flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full max-w-3xl mt-12 px-4 mb-6">
+                <Link href="/admin/posts" className="group relative flex flex-col items-center justify-center gap-3 p-6 rounded-2xl border border-border bg-surface-hover/30 hover:bg-surface-hover transition-all duration-300 hover:-translate-y-1">
+                    <div className="w-10 h-10 rounded-full bg-accent/10 text-accent flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
+                        <FiEdit3 />
+                    </div>
+                    <span className="text-lg font-serif font-bold text-text-main">Manage Posts</span>
+                </Link>
+                <Link href="/admin/posts/new" className="group relative flex flex-col items-center justify-center gap-3 p-6 rounded-2xl border border-border bg-surface-hover/30 hover:bg-surface-hover transition-all duration-300 hover:-translate-y-1">
+                    <div className="w-10 h-10 rounded-full bg-accent/10 text-accent flex items-center justify-center text-lg group-hover:scale-110 transition-transform">
                         <FiEdit3 />
                     </div>
                     <span className="text-lg font-serif font-bold text-text-main">New Post</span>
-                    <span className="text-xs text-text-subtle text-center">Write a new article</span>
                 </Link>
+            </div>
+            
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 w-full max-w-3xl px-4">
                 <Link href="/admin/projects/new" className="group relative flex flex-col items-center justify-center gap-3 p-8 rounded-2xl border border-border bg-surface-hover/30 hover:bg-surface-hover transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
                     <div className="w-12 h-12 rounded-full bg-accent/10 text-accent flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
                         <FiGrid />

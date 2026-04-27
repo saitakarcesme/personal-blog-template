@@ -156,3 +156,91 @@ export async function savePodcast(formData: FormData) {
     fs.writeFileSync(podcastsFile, updatedContent, "utf8");
     return { success: true };
 }
+
+export async function uploadMedia(formData: FormData) {
+    requireDevelopment();
+
+    const file = formData.get("file") as File | null;
+    if (!file) {
+        throw new Error("No file uploaded.");
+    }
+
+    const type = file.type;
+    const size = file.size;
+    const isImage = type.startsWith("image/");
+    const isVideo = type.startsWith("video/");
+
+    if (!isImage && !isVideo) {
+        throw new Error("Only images and videos are supported.");
+    }
+
+    // 5MB for images, 50MB for videos
+    const maxSize = isImage ? 5 * 1024 * 1024 : 50 * 1024 * 1024;
+    if (size > maxSize) {
+        throw new Error(`File too large. Max size is ${isImage ? '5MB' : '50MB'}.`);
+    }
+
+    const mediaDir = path.join(process.cwd(), "public", "media");
+    if (!fs.existsSync(mediaDir)) {
+        fs.mkdirSync(mediaDir, { recursive: true });
+    }
+
+    const buffer = Buffer.from(await file.arrayBuffer());
+    // Sanitize filename
+    const sanitizedName = slugify(file.name.replace(/\.[^/.]+$/, "")) + path.extname(file.name).toLowerCase();
+    const fileName = `${Date.now()}-${sanitizedName}`;
+    const filePath = path.join(mediaDir, fileName);
+
+    fs.writeFileSync(filePath, buffer);
+    return { success: true, url: `/media/${fileName}`, type: isVideo ? 'video' : 'image' };
+}
+
+export async function updatePost(originalSlug: string, formData: FormData) {
+    requireDevelopment();
+
+    const title = formData.get("title") as string;
+    const author = formData.get("author") as string;
+    const date = formData.get("date") as string;
+    const content = formData.get("content") as string;
+
+    if (!title || !date || !content) {
+        throw new Error("Title, date, and content are required.");
+    }
+
+    const newSlug = slugify(title);
+    const postsDir = path.join(process.cwd(), "data", "posts");
+    
+    // If slug changed, delete original
+    if (originalSlug !== newSlug) {
+        const originalPath = path.join(postsDir, `${originalSlug}.md`);
+        if (fs.existsSync(originalPath)) {
+            fs.unlinkSync(originalPath);
+        }
+    }
+
+    if (!fs.existsSync(postsDir)) {
+        fs.mkdirSync(postsDir, { recursive: true });
+    }
+
+    const fileContent = `---
+title: "${title.replace(/"/g, '\\"')}"
+date: "${date}"
+author: "${author || "ISA"}"
+---
+
+${content}
+`;
+
+    fs.writeFileSync(path.join(postsDir, `${newSlug}.md`), fileContent, "utf8");
+    return { success: true, slug: newSlug };
+}
+
+export async function deletePost(slug: string) {
+    requireDevelopment();
+    const postsDir = path.join(process.cwd(), "data", "posts");
+    const filePath = path.join(postsDir, `${slug}.md`);
+    if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath);
+    }
+    return { success: true };
+}
