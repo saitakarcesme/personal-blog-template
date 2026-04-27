@@ -4,6 +4,8 @@ date: "2026-04-27"
 author: "ISA"
 ---
 
+
+![foto.jpeg](/media/1777294239418-foto.jpeg)
 Hi guys, it’s me again.
 
 Last week I went to Romania to attend a summit, and honestly I think this trip affected me more than I expected. It was not only about going to another country or joining a program. Of course, travelling abroad is already something exciting, but this time the most important part was not the city, the buildings, or even the summit itself.
