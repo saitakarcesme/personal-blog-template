@@ -1,8 +1,10 @@
 import { podcastEpisodes } from "../../data/podcasts";
+import { albumPhotos } from "../../data/album";
 import { BlogList } from "@/components/BlogList";
 import { Column } from "@/components/Column";
 import { PodcastList } from "@/components/PodcastList";
 import { ProjectList } from "@/components/ProjectList";
+import { AlbumList } from "@/components/AlbumList";
 import { MissileBase } from "@/components/MissileBase";
 import { ProfileCard } from "@/components/ProfileCard";
 import { getAllPosts } from "@/lib/posts";
@@ -12,6 +14,7 @@ export default function Home() {
   const posts = getAllPosts();
   const projects = getAllProjects();
   const episodes = [...podcastEpisodes].sort((a, b) => a.episode - b.episode);
+  const photos = [...albumPhotos].sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
 
   return (
     <div className="flex flex-col min-h-dvh text-foreground">
@@ -24,7 +27,7 @@ export default function Home() {
           </div>
 
           <div className="order-2 flex flex-col min-[1300px]:order-2 min-w-0">
-            <Column title="ISABlog" className="min-w-0 min-[1300px]:min-w-[320px]">
+            <Column title="ISABlog" scrollable className="min-w-0 min-[1300px]:min-w-[320px] max-h-[80vh] min-[1300px]:max-h-[calc(100vh-3rem)]">
               <BlogList posts={posts} limitOnMobile />
             </Column>
           </div>
@@ -37,6 +40,12 @@ export default function Home() {
               <ProjectList projects={projects} limitOnMobile />
             </Column>
           </div>
+        </div>
+        
+        <div className="mx-auto max-w-7xl mt-8">
+          <Column title="ISAlbum" className="w-full">
+            <AlbumList photos={photos} />
+          </Column>
         </div>
       </main>
       <MissileBase />

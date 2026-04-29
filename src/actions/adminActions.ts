@@ -174,10 +174,10 @@ export async function uploadMedia(formData: FormData) {
         throw new Error("Only images and videos are supported.");
     }
 
-    // 5MB for images, 50MB for videos
-    const maxSize = isImage ? 5 * 1024 * 1024 : 50 * 1024 * 1024;
+    // 50MB for both images and videos
+    const maxSize = 50 * 1024 * 1024;
     if (size > maxSize) {
-        throw new Error(`File too large. Max size is ${isImage ? '5MB' : '50MB'}.`);
+        throw new Error(`File too large. Max size is 50MB.`);
     }
 
     const mediaDir = path.join(process.cwd(), "public", "media");
@@ -243,4 +243,148 @@ export async function deletePost(slug: string) {
         fs.unlinkSync(filePath);
     }
     return { success: true };
+}
+
+export async function saveAlbumPhoto(formData: FormData) {
+    requireDevelopment();
+
+    const date = formData.get("date") as string;
+    const description = formData.get("description") as string;
+    const file = formData.get("file") as File | null;
+
+    if (!date || !file) {
+        throw new Error("Date and File are required.");
+    }
+
+    // Ensure we have uploadMedia defined and it works
+    const uploadResult = await uploadMedia(formData);
+    if (!uploadResult.success) {
+        throw new Error("Media upload failed.");
+    }
+
+    const albumFile = path.join(process.cwd(), "data", "album.ts");
+    
+    if (!fs.existsSync(albumFile)) {
+        throw new Error("album.ts not found");
+    }
+
+    const content = fs.readFileSync(albumFile, "utf8");
+    const id = Date.now().toString();
+
+    const newObjStr = `  {
+    id: "${id}",
+    url: "${uploadResult.url}",
+    date: "${date}",
+    description: "${description ? description.replace(/"/g, '\\"') : ""}",
+  },
+];`;
+
+    const updatedContent = content.replace(/];/, newObjStr);
+    
+    fs.writeFileSync(albumFile, updatedContent, "utf8");
+    return { success: true };
+}
+
+export async function saveAlbumPhotos(formData: FormData) {
+    requireDevelopment();
+
+    const date = formData.get("date") as string;
+    const description = formData.get("description") as string;
+    const files = formData.getAll("files") as File[];
+
+    if (!date || !files || files.length === 0) {
+        throw new Error("Date and at least one file are required.");
+    }
+
+    const albumFile = path.join(process.cwd(), "data", "album.ts");
+
+    if (!fs.existsSync(albumFile)) {
+        throw new Error("album.ts not found");
+    }
+
+    const results: { id: string; url: string }[] = [];
+
+    for (const file of files) {
+        // Create a new FormData for each file to reuse uploadMedia
+        const singleFormData = new FormData();
+        singleFormData.set("file", file);
+
+        const uploadResult = await uploadMedia(singleFormData);
+        if (!uploadResult.success) {
+            throw new Error(`Failed to upload: ${file.name}`);
+        }
+
+        const id = (Date.now() + results.length).toString();
+        results.push({ id, url: uploadResult.url });
+    }
+
+    // Build all new entries and append them in one write
+    let content = fs.readFileSync(albumFile, "utf8");
+    const newEntries = results.map((r) => `  {
+    id: "${r.id}",
+    url: "${r.url}",
+    date: "${date}",
+    description: "${description ? description.replace(/"/g, '\\"') : ""}",
+  },`).join("\n");
+
+    const updatedContent = content.replace(/];/, newEntries + "\n];");
+    fs.writeFileSync(albumFile, updatedContent, "utf8");
+
+    return { success: true, count: results.length };
+}
+
+export async function deleteAlbumPhoto(id: string) {
+    requireDevelopment();
+
+    const albumFile = path.join(process.cwd(), "data", "album.ts");
+
+    if (!fs.existsSync(albumFile)) {
+        throw new Error("album.ts not found");
+    }
+
+    const content = fs.readFileSync(albumFile, "utf8");
+
+    // Find the photo entry to get the url for file deletion
+    const urlMatch = content.match(new RegExp(`\\{[^}]*id:\\s*"${id}"[^}]*url:\\s*"([^"]*)"[^}]*\\}`));
+    if (urlMatch && urlMatch[1]) {
+        const mediaPath = path.join(process.cwd(), "public", urlMatch[1]);
+        if (fs.existsSync(mediaPath)) {
+            fs.unlinkSync(mediaPath);
+        }
+    }
+
+    // Remove the entry from the array - match the entire object block for this id
+    const entryRegex = new RegExp(`\\s*\\{[^}]*id:\\s*"${id}"[^}]*\\},?`, "g");
+    const updatedContent = content.replace(entryRegex, "");
+
+    fs.writeFileSync(albumFile, updatedContent, "utf8");
+    return { success: true };
+}
+
+export async function getAlbumPhotos() {
+    requireDevelopment();
+
+    const albumFile = path.join(process.cwd(), "data", "album.ts");
+
+    if (!fs.existsSync(albumFile)) {
+        return [];
+    }
+
+    const content = fs.readFileSync(albumFile, "utf8");
+
+    // Parse photos from the file content
+    const photoRegex = /\{\s*id:\s*"([^"]*)",\s*url:\s*"([^"]*)",\s*date:\s*"([^"]*)",\s*description:\s*"([^"]*)"\s*,?\s*\}/g;
+    const photos: { id: string; url: string; date: string; description: string }[] = [];
+    let match;
+
+    while ((match = photoRegex.exec(content)) !== null) {
+        photos.push({
+            id: match[1],
+            url: match[2],
+            date: match[3],
+            description: match[4],
+        });
+    }
+
+    return photos;
 }

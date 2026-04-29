@@ -3,7 +3,7 @@
 import { useTransition, useState } from "react";
 import Link from "next/link";
 import { publishChanges } from "@/actions/adminActions";
-import { FiEdit3, FiGrid, FiMic, FiUploadCloud } from "react-icons/fi";
+import { FiEdit3, FiGrid, FiMic, FiUploadCloud, FiImage } from "react-icons/fi";
 
 export default function AdminDashboard() {
     const [isPending, startTransition] = useTransition();
@@ -52,6 +52,20 @@ export default function AdminDashboard() {
                     </div>
                     <span className="text-lg font-serif font-bold text-text-main">New Podcast</span>
                     <span className="text-xs text-text-subtle text-center">Link YouTube episode</span>
+                </Link>
+                <Link href="/admin/album/new" className="group relative flex flex-col items-center justify-center gap-3 p-8 rounded-2xl border border-border bg-surface-hover/30 hover:bg-surface-hover transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                    <div className="w-12 h-12 rounded-full bg-accent/10 text-accent flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                        <FiImage />
+                    </div>
+                    <span className="text-lg font-serif font-bold text-text-main">New Photo</span>
+                    <span className="text-xs text-text-subtle text-center">Upload to ISAlbum</span>
+                </Link>
+                <Link href="/admin/album/edit" className="group relative flex flex-col items-center justify-center gap-3 p-8 rounded-2xl border border-border bg-surface-hover/30 hover:bg-surface-hover transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                    <div className="w-12 h-12 rounded-full bg-accent/10 text-accent flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                        <FiImage />
+                    </div>
+                    <span className="text-lg font-serif font-bold text-text-main">Edit Album</span>
+                    <span className="text-xs text-text-subtle text-center">Manage ISAlbum photos</span>
                 </Link>
             </div>
 
