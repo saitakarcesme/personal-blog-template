@@ -3,7 +3,7 @@
 import { useTransition, useState } from "react";
 import Link from "next/link";
 import { publishChanges } from "@/actions/adminActions";
-import { FiEdit3, FiGrid, FiMic, FiUploadCloud, FiImage } from "react-icons/fi";
+import { FiEdit3, FiGrid, FiMic, FiUploadCloud, FiImage, FiMusic, FiStar } from "react-icons/fi";
 
 export default function AdminDashboard() {
     const [isPending, startTransition] = useTransition();
@@ -66,6 +66,20 @@ export default function AdminDashboard() {
                     </div>
                     <span className="text-lg font-serif font-bold text-text-main">Edit Album</span>
                     <span className="text-xs text-text-subtle text-center">Manage ISAlbum photos</span>
+                </Link>
+                <Link href="/admin/cinema" className="group relative flex flex-col items-center justify-center gap-3 p-8 rounded-2xl border border-border bg-surface-hover/30 hover:bg-surface-hover transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                    <div className="w-12 h-12 rounded-full bg-accent/10 text-accent flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                        <FiStar />
+                    </div>
+                    <span className="text-lg font-serif font-bold text-text-main">Cinema</span>
+                    <span className="text-xs text-text-subtle text-center">Rate movies and TV shows</span>
+                </Link>
+                <Link href="/admin/radio" className="group relative flex flex-col items-center justify-center gap-3 p-8 rounded-2xl border border-border bg-surface-hover/30 hover:bg-surface-hover transition-all duration-300 hover:shadow-lg hover:-translate-y-1">
+                    <div className="w-12 h-12 rounded-full bg-accent/10 text-accent flex items-center justify-center text-xl group-hover:scale-110 transition-transform">
+                        <FiMusic />
+                    </div>
+                    <span className="text-lg font-serif font-bold text-text-main">Radio</span>
+                    <span className="text-xs text-text-subtle text-center">Rate songs and albums</span>
                 </Link>
             </div>
 

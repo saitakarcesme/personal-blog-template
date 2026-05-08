@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import { FiHome, FiEdit3, FiGrid, FiMic, FiRadio } from "react-icons/fi";
+import { FiHome, FiEdit3, FiGrid, FiMic, FiMusic, FiRadio, FiStar } from "react-icons/fi";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -15,16 +15,18 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </div>
       </div>
 
-      <header className="sticky top-0 z-10 backdrop-blur-md bg-surface/70 border-b border-border">
-        <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
+      <header className="sticky top-0 z-10 border-b border-border bg-surface/70 backdrop-blur-md">
+        <div className="mx-auto flex min-h-16 max-w-5xl flex-col gap-3 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:py-0">
           <Link href="/admin" className="font-serif font-bold text-xl text-text-main flex items-center gap-2 hover:opacity-80 transition-opacity">
             <FiRadio className="text-accent" />
             Workspace
           </Link>
-          <nav className="flex gap-6 text-sm font-medium text-text-muted">
+          <nav className="flex flex-wrap justify-center gap-3 text-sm font-medium text-text-muted sm:justify-end sm:gap-6">
             <Link href="/admin/posts/new" className="hover:text-text-main transition-colors flex items-center gap-1.5"><FiEdit3 /> Post</Link>
             <Link href="/admin/projects/new" className="hover:text-text-main transition-colors flex items-center gap-1.5"><FiGrid /> Project</Link>
             <Link href="/admin/podcasts/new" className="hover:text-text-main transition-colors flex items-center gap-1.5"><FiMic /> Podcast</Link>
+            <Link href="/admin/cinema" className="hover:text-text-main transition-colors flex items-center gap-1.5"><FiStar /> Cinema</Link>
+            <Link href="/admin/radio" className="hover:text-text-main transition-colors flex items-center gap-1.5"><FiMusic /> Radio</Link>
             <div className="w-[1px] h-4 bg-border mx-2"></div>
             <Link href="/" className="hover:text-text-main transition-colors flex items-center gap-1.5" target="_blank"><FiHome /> Live Site</Link>
           </nav>

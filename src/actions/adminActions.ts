@@ -28,6 +28,105 @@ function slugify(text: string) {
         .trim();
 }
 
+function quoted(value: string) {
+    return JSON.stringify(value);
+}
+
+function clampIsaScore(value: FormDataEntryValue | null) {
+    const score = Number(value);
+    if (!Number.isFinite(score)) return 0;
+    return Math.min(100, Math.max(0, Math.round(score)));
+}
+
+function normalizeCinemaType(value: FormDataEntryValue | null) {
+    return value === "tv" ? "tv" : "movie";
+}
+
+function normalizeRadioType(value: FormDataEntryValue | null) {
+    if (value === "album" || value === "playlist") return value;
+    return "song";
+}
+
+function buildCinemaMarkdown(formData: FormData, createdAt?: string) {
+    const title = String(formData.get("title") || "").trim();
+    const year = String(formData.get("year") || "").trim();
+    const type = normalizeCinemaType(formData.get("type"));
+    const poster = String(formData.get("poster") || "").trim();
+    const imdbId = String(formData.get("imdbId") || "").trim();
+    const imdbRating = String(formData.get("imdbRating") || "N/A").trim() || "N/A";
+    const isaScore = clampIsaScore(formData.get("isaScore"));
+    const watchedDate = String(formData.get("watchedDate") || "").trim();
+    const review = String(formData.get("review") || "").trim();
+    const requestedSlug = String(formData.get("slug") || "").trim();
+    const slug = slugify(requestedSlug || title);
+    const now = new Date().toISOString();
+
+    if (!title || !slug || !review) {
+        throw new Error("Title, slug, and review are required.");
+    }
+
+    const fileContent = `---
+title: ${quoted(title)}
+slug: ${quoted(slug)}
+year: ${quoted(year)}
+type: ${quoted(type)}
+poster: ${quoted(poster)}
+imdbId: ${quoted(imdbId)}
+imdbRating: ${quoted(imdbRating)}
+isaScore: ${isaScore}
+watchedDate: ${quoted(watchedDate)}
+createdAt: ${quoted(createdAt || now)}
+updatedAt: ${quoted(now)}
+---
+
+${review}
+`;
+
+    return { slug, fileContent };
+}
+
+function buildRadioMarkdown(formData: FormData, createdAt?: string) {
+    const title = String(formData.get("title") || "").trim();
+    const artist = String(formData.get("artist") || "").trim();
+    const year = String(formData.get("year") || "").trim();
+    const type = normalizeRadioType(formData.get("type"));
+    const cover = String(formData.get("cover") || "").trim();
+    const sourceId = String(formData.get("sourceId") || "").trim();
+    const sourceUrl = String(formData.get("sourceUrl") || "").trim();
+    const isaScore = clampIsaScore(formData.get("isaScore"));
+    const mood = String(formData.get("mood") || "").trim();
+    const listenedDate = String(formData.get("listenedDate") || "").trim();
+    const review = String(formData.get("review") || "").trim();
+    const requestedSlug = String(formData.get("slug") || "").trim();
+    const slug = slugify(requestedSlug || `${title} ${artist}`);
+    const now = new Date().toISOString();
+
+    if (!title || !slug || !review) {
+        throw new Error("Title, slug, and review are required.");
+    }
+
+    const fileContent = `---
+title: ${quoted(title)}
+slug: ${quoted(slug)}
+artist: ${quoted(artist)}
+year: ${quoted(year)}
+type: ${quoted(type)}
+cover: ${quoted(cover)}
+sourceId: ${quoted(sourceId)}
+sourceUrl: ${quoted(sourceUrl)}
+isaScore: ${isaScore}
+mood: ${quoted(mood)}
+listenedDate: ${quoted(listenedDate)}
+createdAt: ${quoted(createdAt || now)}
+updatedAt: ${quoted(now)}
+---
+
+${review}
+`;
+
+    return { slug, fileContent };
+}
+
 export async function savePost(formData: FormData) {
     requireDevelopment();
 
@@ -246,6 +345,106 @@ export async function deletePost(slug: string) {
     if (fs.existsSync(filePath)) {
         fs.unlinkSync(filePath);
     }
+    return { success: true };
+}
+
+export async function saveCinemaEntry(formData: FormData) {
+    requireDevelopment();
+
+    const cinemaDir = path.join(process.cwd(), "data", "cinema");
+    if (!fs.existsSync(cinemaDir)) {
+        fs.mkdirSync(cinemaDir, { recursive: true });
+    }
+
+    const { slug, fileContent } = buildCinemaMarkdown(formData);
+    fs.writeFileSync(path.join(cinemaDir, `${slug}.md`), fileContent, "utf8");
+
+    return { success: true, slug };
+}
+
+export async function updateCinemaEntry(originalSlug: string, formData: FormData) {
+    requireDevelopment();
+
+    const cinemaDir = path.join(process.cwd(), "data", "cinema");
+    if (!fs.existsSync(cinemaDir)) {
+        fs.mkdirSync(cinemaDir, { recursive: true });
+    }
+
+    const createdAt = String(formData.get("createdAt") || "").trim() || undefined;
+    const { slug, fileContent } = buildCinemaMarkdown(formData, createdAt);
+
+    if (originalSlug !== slug) {
+        const originalPath = path.join(cinemaDir, `${originalSlug}.md`);
+        if (fs.existsSync(originalPath)) {
+            fs.unlinkSync(originalPath);
+        }
+    }
+
+    fs.writeFileSync(path.join(cinemaDir, `${slug}.md`), fileContent, "utf8");
+
+    return { success: true, slug };
+}
+
+export async function deleteCinemaEntry(slug: string) {
+    requireDevelopment();
+
+    const safeSlug = slugify(slug);
+    const filePath = path.join(process.cwd(), "data", "cinema", `${safeSlug}.md`);
+
+    if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath);
+    }
+
+    return { success: true };
+}
+
+export async function saveRadioEntry(formData: FormData) {
+    requireDevelopment();
+
+    const radioDir = path.join(process.cwd(), "data", "radio");
+    if (!fs.existsSync(radioDir)) {
+        fs.mkdirSync(radioDir, { recursive: true });
+    }
+
+    const { slug, fileContent } = buildRadioMarkdown(formData);
+    fs.writeFileSync(path.join(radioDir, `${slug}.md`), fileContent, "utf8");
+
+    return { success: true, slug };
+}
+
+export async function updateRadioEntry(originalSlug: string, formData: FormData) {
+    requireDevelopment();
+
+    const radioDir = path.join(process.cwd(), "data", "radio");
+    if (!fs.existsSync(radioDir)) {
+        fs.mkdirSync(radioDir, { recursive: true });
+    }
+
+    const createdAt = String(formData.get("createdAt") || "").trim() || undefined;
+    const { slug, fileContent } = buildRadioMarkdown(formData, createdAt);
+
+    if (originalSlug !== slug) {
+        const originalPath = path.join(radioDir, `${originalSlug}.md`);
+        if (fs.existsSync(originalPath)) {
+            fs.unlinkSync(originalPath);
+        }
+    }
+
+    fs.writeFileSync(path.join(radioDir, `${slug}.md`), fileContent, "utf8");
+
+    return { success: true, slug };
+}
+
+export async function deleteRadioEntry(slug: string) {
+    requireDevelopment();
+
+    const safeSlug = slugify(slug);
+    const filePath = path.join(process.cwd(), "data", "radio", `${safeSlug}.md`);
+
+    if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath);
+    }
+
     return { success: true };
 }
 

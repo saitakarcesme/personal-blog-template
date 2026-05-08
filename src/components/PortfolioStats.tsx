@@ -44,7 +44,7 @@ export function PortfolioStats({ stats }: { stats: StatItem[] }) {
         </svg>
       </div>
 
-      <dl className="relative z-10 mx-auto grid max-w-5xl grid-cols-2 gap-x-8 gap-y-12 text-center sm:grid-cols-4">
+      <dl className="relative z-10 mx-auto grid max-w-6xl grid-cols-2 gap-x-8 gap-y-12 text-center sm:grid-cols-3 lg:grid-cols-6">
         {stats.map((stat) => (
           <div key={stat.label} className="min-w-0">
             <dt className="mb-4 text-sm text-text-muted">{stat.label}</dt>

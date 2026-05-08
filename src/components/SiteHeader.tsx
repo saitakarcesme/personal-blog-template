@@ -7,6 +7,8 @@ const links = [
   { href: "/", label: "Home", activePaths: ["/"] },
   { href: "/blog", label: "Blog", activePaths: ["/blog", "/posts"] },
   { href: "/projects", label: "Projects", activePaths: ["/projects"] },
+  { href: "/cinema", label: "Cinema", activePaths: ["/cinema"] },
+  { href: "/radio", label: "Radio", activePaths: ["/radio"] },
   { href: "/podcast", label: "Podcast", activePaths: ["/podcast", "/podcasts"] },
   { href: "/profile", label: "Profile", activePaths: ["/profile", "/album"] },
 ];

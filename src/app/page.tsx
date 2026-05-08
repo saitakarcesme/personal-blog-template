@@ -2,8 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { PageShell } from "@/components/PageShell";
 import { PortfolioStats } from "@/components/PortfolioStats";
+import { getCinemaSlugs } from "@/lib/cinema";
 import { getPostSlugs } from "@/lib/posts";
 import { getProjectSlugs } from "@/lib/projects";
+import { getRadioSlugs } from "@/lib/radio";
 import { albumPhotos } from "../../data/album";
 import { podcastEpisodes } from "../../data/podcasts";
 
@@ -17,6 +19,16 @@ const destinations = [
     href: "/projects",
     title: "Projects",
     description: "Software experiments and build logs.",
+  },
+  {
+    href: "/cinema",
+    title: "Cinema",
+    description: "Movies and TV shows scored with a personal lens.",
+  },
+  {
+    href: "/radio",
+    title: "Radio",
+    description: "Songs, albums, and playlists with notes and scores.",
   },
   {
     href: "/podcast",
@@ -36,6 +48,8 @@ export default function Home() {
     { label: "Projects", value: getProjectSlugs().length },
     { label: "Podcast Episodes", value: podcastEpisodes.length },
     { label: "Photos", value: albumPhotos.length },
+    { label: "Cinema", value: getCinemaSlugs().length },
+    { label: "Radio", value: getRadioSlugs().length },
   ];
 
   return (
@@ -82,7 +96,7 @@ export default function Home() {
 
         <section
           aria-label="Site sections"
-          className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4"
+          className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6"
         >
           {destinations.map((item) => (
             <Link
