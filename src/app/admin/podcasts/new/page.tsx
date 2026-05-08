@@ -4,10 +4,12 @@ import { useTransition } from "react";
 import { savePodcast } from "@/actions/adminActions";
 import { useRouter } from "next/navigation";
 import { FiMic } from "react-icons/fi";
+import { useHydratedDate } from "@/hooks/useHydratedDate";
 
 export default function NewPodcastPage() {
     const [isPending, startTransition] = useTransition();
     const router = useRouter();
+    const [dateValue, setDateValue] = useHydratedDate();
 
     return (
         <div className="max-w-2xl mx-auto">
@@ -40,7 +42,7 @@ export default function NewPodcastPage() {
                     </div>
                     <div>
                         <label className="block text-xs font-bold text-text-subtle uppercase tracking-wider mb-2">Distribution Date</label>
-                        <input name="date" required type="date" defaultValue={new Date().toISOString().split("T")[0]} className="w-full bg-background border border-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent text-text-main transition-all" />
+                        <input name="date" required type="date" value={dateValue} onChange={(event) => setDateValue(event.target.value)} className="w-full bg-background border border-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent text-text-main transition-all" />
                     </div>
                 </div>
 

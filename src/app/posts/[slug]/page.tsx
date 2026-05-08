@@ -1,4 +1,5 @@
 import { BackButton } from "@/components/BackButton";
+import { PageShell } from "@/components/PageShell";
 import { getPostDetail, getPostSlugs, getPostSlugFromFileName } from "@/lib/posts";
 import { notFound } from "next/navigation";
 
@@ -18,9 +19,8 @@ export default async function PostPage({
   if (!post) notFound();
 
   return (
-    <div className="min-h-dvh text-foreground">
-      <main className="mx-auto max-w-3xl px-4 pt-24 pb-10 min-[1300px]:py-10 sm:px-6 lg:px-8">
-        <BackButton />
+    <PageShell>
+        <BackButton href="/blog" />
 
         <header className="mt-12 mb-16 text-center">
           <h1 className="text-balance text-4xl md:text-5xl font-bold tracking-tight text-text-main font-serif leading-tight">
@@ -41,8 +41,7 @@ export default async function PostPage({
           className="prose prose-neutral dark:prose-invert mx-auto max-w-2xl font-serif text-lg leading-loose prose-p:text-text-main prose-headings:font-serif prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-text-main prose-a:text-text-main prose-a:underline-offset-4 hover:prose-a:opacity-80 prose-strong:text-text-main prose-blockquote:border-l-accent prose-blockquote:text-text-muted prose-blockquote:font-style-italic prose-code:text-accent prose-pre:bg-surface-hover prose-pre:border prose-pre:border-border prose-video:w-full prose-video:rounded-xl prose-video:aspect-video prose-iframe:w-full prose-iframe:rounded-xl prose-iframe:aspect-video prose-img:rounded-xl"
           dangerouslySetInnerHTML={{ __html: post.html }}
         />
-      </main>
-    </div>
+    </PageShell>
   );
 }
 

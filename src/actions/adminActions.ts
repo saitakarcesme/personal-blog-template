@@ -7,6 +7,10 @@ import { promisify } from "node:util";
 
 const execAsync = promisify(exec);
 
+function getErrorMessage(error: unknown) {
+    return error instanceof Error ? error.message : String(error);
+}
+
 // Helper to check environment security
 function requireDevelopment() {
     if (process.env.NODE_ENV === "production") {
@@ -100,18 +104,18 @@ export async function publishChanges() {
         // This command might fail if there's nothing to commit, which is fine, we intercept the error and still try to push.
         try {
             await execAsync('git commit -m "Admin update: added new files"');
-        } catch (commitErr: any) {
+        } catch (commitErr: unknown) {
             // Ignore if working tree is clean
-            if (!commitErr.message.includes("nothing to commit")) {
+            if (!getErrorMessage(commitErr).includes("nothing to commit")) {
                 throw commitErr;
             }
         }
 
         await execAsync('git push origin main');
         return { success: true, message: "Successfully published to GitHub! Vercel redeployment triggered." };
-    } catch (error: any) {
+    } catch (error: unknown) {
         console.error("Failed to publish changes via git:", error);
-        return { success: false, message: error.message || "Unknown error during git push." };
+        return { success: false, message: getErrorMessage(error) || "Unknown error during git push." };
     }
 }
 
@@ -319,7 +323,7 @@ export async function saveAlbumPhotos(formData: FormData) {
     }
 
     // Build all new entries and append them in one write
-    let content = fs.readFileSync(albumFile, "utf8");
+    const content = fs.readFileSync(albumFile, "utf8");
     const newEntries = results.map((r) => `  {
     id: "${r.id}",
     url: "${r.url}",

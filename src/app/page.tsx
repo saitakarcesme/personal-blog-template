@@ -1,54 +1,112 @@
-import { podcastEpisodes } from "../../data/podcasts";
+import Image from "next/image";
+import Link from "next/link";
+import { PageShell } from "@/components/PageShell";
+import { PortfolioStats } from "@/components/PortfolioStats";
+import { getPostSlugs } from "@/lib/posts";
+import { getProjectSlugs } from "@/lib/projects";
 import { albumPhotos } from "../../data/album";
-import { BlogList } from "@/components/BlogList";
-import { Column } from "@/components/Column";
-import { PodcastList } from "@/components/PodcastList";
-import { ProjectList } from "@/components/ProjectList";
-import { AlbumList } from "@/components/AlbumList";
-import { MissileBase } from "@/components/MissileBase";
-import { ProfileCard } from "@/components/ProfileCard";
-import { getAllPosts } from "@/lib/posts";
-import { getAllProjects } from "@/lib/projects";
+import { podcastEpisodes } from "../../data/podcasts";
+
+const destinations = [
+  {
+    href: "/blog",
+    title: "Blog",
+    description: "Essays, notes, and personal reflections.",
+  },
+  {
+    href: "/projects",
+    title: "Projects",
+    description: "Software experiments and build logs.",
+  },
+  {
+    href: "/podcast",
+    title: "Podcast",
+    description: "Conversations and episodes collected in one place.",
+  },
+  {
+    href: "/profile",
+    title: "Profile",
+    description: "About me, social links, Tetris, and the album.",
+  },
+];
 
 export default function Home() {
-  const posts = getAllPosts();
-  const projects = getAllProjects();
-  const episodes = [...podcastEpisodes].sort((a, b) => a.episode - b.episode);
-  const photos = [...albumPhotos].sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
+  const stats = [
+    { label: "Posts", value: getPostSlugs().length },
+    { label: "Projects", value: getProjectSlugs().length },
+    { label: "Podcast Episodes", value: podcastEpisodes.length },
+    { label: "Photos", value: albumPhotos.length },
+  ];
 
   return (
-    <div className="flex flex-col min-h-dvh text-foreground">
-      <main className="flex-1 px-4 py-8 pt-24 pb-16 min-[1300px]:py-6 sm:px-6 xl:px-8">
-        <div className="mx-auto grid max-w-7xl grid-cols-1 gap-4 min-[1300px]:grid-cols-[1fr_2fr_1fr] min-[1300px]:items-start min-[1300px]:gap-5">
-          <div className="order-1 min-w-0 max-[1300px]:hidden min-[1300px]:order-3 min-[1300px]:sticky min-[1300px]:top-6 min-[1300px]:max-h-[calc(100vh-3rem)] flex flex-col">
-            <Column className="flex-1 h-full" scrollable>
-              <ProfileCard />
-            </Column>
+    <div className="relative isolate overflow-hidden">
+      <PageShell width="wide" className="flex flex-col gap-10 py-12 sm:gap-14 sm:py-16">
+        <section className="grid gap-8 md:grid-cols-[minmax(0,1.4fr)_minmax(220px,0.6fr)] md:items-center">
+          <div>
+            <p className="mb-4 text-xs font-semibold uppercase text-text-subtle">
+              Personal blog
+            </p>
+            <h1 className="max-w-3xl font-serif text-4xl font-bold leading-tight text-text-main sm:text-5xl">
+              Ideas, projects, and notes from Ibrahim Sait.
+            </h1>
+            <p className="mt-5 max-w-2xl text-base leading-7 text-text-muted">
+              A quieter home for writing, project work, podcast episodes, and a
+              more personal profile space.
+            </p>
           </div>
 
-          <div className="order-2 flex flex-col min-[1300px]:order-2 min-w-0">
-            <Column title="ISABlog" scrollable className="min-w-0 min-[1300px]:min-w-[320px] max-h-[80vh] min-[1300px]:max-h-[calc(100vh-3rem)]">
-              <BlogList posts={posts} limitOnMobile />
-            </Column>
-          </div>
+          <Link
+            href="/profile"
+            className="group flex w-full max-w-sm items-center gap-4 rounded-lg border border-border bg-surface/95 p-4 transition-colors hover:bg-surface-hover md:max-w-xs md:justify-self-end"
+          >
+            <div className="relative h-16 w-16 shrink-0 overflow-hidden rounded-full ring-1 ring-ring">
+              <Image
+                src="/profilepic.jpeg"
+                alt="Ibrahim Sait Akarcesme"
+                fill
+                sizes="64px"
+                className="object-cover"
+                priority
+              />
+            </div>
+            <div className="min-w-0">
+              <p className="font-serif text-lg font-bold text-text-main">
+                Ibrahim Sait Akarcesme
+              </p>
+              <p className="mt-1 text-sm text-text-muted group-hover:text-text-main">
+                View profile -&gt;
+              </p>
+            </div>
+          </Link>
+        </section>
 
-          <div className="order-3 flex flex-col gap-4 min-[1300px]:order-1 min-[1300px]:sticky min-[1300px]:top-6 min-[1300px]:max-h-[calc(100vh-3rem)] min-[1300px]:gap-5 min-w-0">
-            <Column title="ISAPodcast" scrollable className="min-w-0 flex-none min-[1300px]:max-h-[40vh]">
-              <PodcastList episodes={episodes} limitOnMobile />
-            </Column>
-            <Column title="Projects" scrollable className="min-w-0 flex-1">
-              <ProjectList projects={projects} limitOnMobile />
-            </Column>
-          </div>
-        </div>
-        
-        <div className="mx-auto max-w-7xl mt-8">
-          <Column title="ISAlbum" className="w-full">
-            <AlbumList photos={photos} />
-          </Column>
-        </div>
-      </main>
-      <MissileBase />
+        <section
+          aria-label="Site sections"
+          className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4"
+        >
+          {destinations.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="group flex min-h-36 flex-col justify-between rounded-lg border border-border bg-surface/95 p-5 transition-colors hover:bg-surface-hover sm:min-h-40"
+            >
+              <div>
+                <h2 className="font-serif text-2xl font-bold text-text-main">
+                  {item.title}
+                </h2>
+                <p className="mt-3 text-sm leading-6 text-text-muted">
+                  {item.description}
+                </p>
+              </div>
+              <span className="mt-6 text-sm font-semibold text-text-subtle transition-colors group-hover:text-text-main">
+                Open -&gt;
+              </span>
+            </Link>
+          ))}
+        </section>
+
+        <PortfolioStats stats={stats} />
+      </PageShell>
     </div>
   );
 }

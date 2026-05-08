@@ -1,18 +1,34 @@
-import { BackButton } from "@/components/BackButton";
+import { albumPhotos } from "../../../data/album";
+import { AlbumList } from "@/components/AlbumList";
+import { PageHeader } from "@/components/PageHeader";
+import { PageShell } from "@/components/PageShell";
 import { ProfileCard } from "@/components/ProfileCard";
-import { Column } from "@/components/Column";
 
 export default function ProfilePage() {
-    return (
-        <div className="min-h-dvh text-foreground">
-            <main className="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8 flex flex-col items-center">
-                <div className="w-full mb-8">
-                    <BackButton />
-                </div>
-                <Column className="w-full max-w-md">
-                    <ProfileCard />
-                </Column>
-            </main>
-        </div>
-    );
+  const photos = [...albumPhotos].sort((a, b) =>
+    a.date < b.date ? 1 : a.date > b.date ? -1 : 0,
+  );
+
+  return (
+    <PageShell width="wide">
+      <PageHeader
+        eyebrow="Profile"
+        title="Ibrahim Sait Akarcesme"
+        description="A more personal corner with social links, Tetris, and the photo album."
+      />
+
+      <div className="grid gap-10 lg:grid-cols-[minmax(0,360px)_minmax(0,1fr)] lg:items-start">
+        <section className="rounded-lg border border-border bg-surface p-5">
+          <ProfileCard />
+        </section>
+
+        <section>
+          <h2 className="mb-6 font-serif text-3xl font-bold text-text-main">
+            ISAlbum
+          </h2>
+          <AlbumList photos={photos} />
+        </section>
+      </div>
+    </PageShell>
+  );
 }

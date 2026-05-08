@@ -1,9 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Newsreader } from "next/font/google";
 import { CursorDots } from "@/components/CursorDots";
-import { ThemeProvider } from "@/components/ThemeProvider";
-import { ThemeSwitcher } from "@/components/ThemeSwitcher";
-import { MobileProfileButton } from "@/components/MobileProfileButton";
+import { SiteHeader } from "@/components/SiteHeader";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -31,16 +29,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <body
+        suppressHydrationWarning
         className={`${geistSans.variable} ${newsreader.variable} antialiased`}
       >
-        <ThemeProvider>
-          {children}
-          <CursorDots />
-          <ThemeSwitcher />
-          <MobileProfileButton />
-        </ThemeProvider>
+        <SiteHeader />
+        {children}
+        <CursorDots />
       </body>
     </html>
   );

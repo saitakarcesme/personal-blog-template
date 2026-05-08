@@ -2,45 +2,19 @@
 @plugin "@tailwindcss/typography";
 
 :root {
-  /* LIGHT MODE (Editorial, clean, high contrast readability) */
-  --background: #ffffff;
-  --foreground: #1c1c1c;
-
-  /* Surfaces & Cards */
-  --surface: #f9f9f9;
-  --surface-hover: #f1f1f1;
-  --border: #e6e6e6;
-  --ring: rgba(0, 0, 0, 0.05);
-
-  /* Typography Hierarchy */
-  --text-main: #1c1c1c;
-  /* Strongest reading text */
-  --text-muted: #555555;
-  /* Subtitles, secondary info */
-  --text-subtle: #888888;
-  /* Meta, dates, tiny helper text */
-
-  /* Accents */
-  --accent: #242424;
-}
-
-:root[data-theme="dark"] {
-  /* DARK MODE (Intentionally designed, deep calm grays, not pure black) */
+  color-scheme: dark;
   --background: #111111;
   --foreground: #ededed;
 
-  /* Surfaces & Cards */
   --surface: #1a1a1a;
   --surface-hover: #222222;
   --border: #2a2a2a;
   --ring: rgba(255, 255, 255, 0.05);
 
-  /* Typography Hierarchy */
   --text-main: #ededed;
   --text-muted: #a0a0a0;
   --text-subtle: #6b6b6b;
 
-  /* Accents */
   --accent: #d4d4d4;
 }
 
@@ -67,7 +41,6 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
-  transition: background 0.3s ease, color 0.3s ease;
 }
 
 /* Hide scrollbar while keeping scroll behavior */
@@ -109,4 +82,130 @@ h6 {
 }
 .animate-glow-drift {
   animation: glow-drift 12s ease-in-out infinite;
+}
+
+.portfolio-energy {
+  position: absolute;
+  left: 50%;
+  top: 54%;
+  z-index: -1;
+  width: min(760px, 150vw);
+  aspect-ratio: 420 / 260;
+  color: rgba(224, 226, 218, 0.72);
+  opacity: 0.68;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+
+.portfolio-energy::before {
+  position: absolute;
+  inset: 12% 18%;
+  border-radius: 999px;
+  background:
+    radial-gradient(circle at 50% 52%, rgba(118, 196, 142, 0.12), transparent 38%),
+    radial-gradient(circle at 46% 48%, rgba(255, 255, 255, 0.08), transparent 42%);
+  content: "";
+  filter: blur(34px);
+}
+
+.portfolio-energy svg {
+  position: relative;
+  filter: drop-shadow(0 0 26px rgba(118, 196, 142, 0.08));
+}
+
+.portfolio-energy-halo {
+  fill: rgba(255, 255, 255, 0.018);
+  stroke: rgba(255, 255, 255, 0.05);
+  stroke-width: 1;
+}
+
+.portfolio-energy-ring {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-width: 0.9;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.portfolio-energy-ring-wide {
+  opacity: 0.26;
+  stroke-dasharray: 4 14;
+  animation: portfolio-energy-orbit 38s linear infinite;
+}
+
+.portfolio-energy-ring-tilt {
+  opacity: 0.2;
+  stroke-dasharray: 18 24;
+  transform: rotate(-24deg);
+  animation: portfolio-energy-counter 28s linear infinite;
+}
+
+.portfolio-energy-thread {
+  fill: none;
+  stroke: rgba(126, 206, 152, 0.18);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 1;
+  animation: portfolio-energy-breathe 8s ease-in-out infinite;
+}
+
+.portfolio-energy-dots {
+  fill: rgba(126, 206, 152, 0.62);
+  filter: drop-shadow(0 0 9px rgba(126, 206, 152, 0.16));
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.portfolio-energy-dots-slow {
+  animation: portfolio-energy-drift 34s linear infinite;
+}
+
+.portfolio-energy-dots-pulse {
+  animation: portfolio-energy-pulse 5.5s ease-in-out infinite;
+}
+
+@keyframes portfolio-energy-orbit {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes portfolio-energy-counter {
+  to { transform: rotate(-384deg); }
+}
+
+@keyframes portfolio-energy-drift {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes portfolio-energy-breathe {
+  0%, 100% { opacity: 0.32; }
+  50% { opacity: 0.62; }
+}
+
+@keyframes portfolio-energy-pulse {
+  0%, 100% { opacity: 0.42; transform: scale(0.96); }
+  50% { opacity: 0.86; transform: scale(1.05); }
+}
+
+@media (max-width: 640px) {
+  .portfolio-energy {
+    top: 52%;
+    width: min(520px, 165vw);
+    opacity: 0.56;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portfolio-energy-ring-wide,
+  .portfolio-energy-ring-tilt,
+  .portfolio-energy-thread,
+  .portfolio-energy-dots-slow,
+  .portfolio-energy-dots-pulse {
+    animation: none;
+  }
+}
+
+.album-tile {
+  content-visibility: auto;
+  contain-intrinsic-size: 180px;
 }

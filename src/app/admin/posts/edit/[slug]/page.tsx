@@ -1,6 +1,5 @@
 import PostEditor from "@/components/PostEditor";
 import { FiEdit2 } from "react-icons/fi";
-import { getPostDetail } from "@/lib/posts";
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";

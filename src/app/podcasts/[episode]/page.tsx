@@ -1,4 +1,5 @@
 import { BackButton } from "@/components/BackButton";
+import { PageShell } from "@/components/PageShell";
 import { getYouTubeEmbedUrl } from "@/lib/youtube";
 import { podcastEpisodes } from "../../../../data/podcasts";
 import Link from "next/link";
@@ -24,9 +25,8 @@ export default async function PodcastEpisodePage({
   if (!embedUrl) notFound();
 
   return (
-    <div className="min-h-dvh text-foreground">
-      <main className="mx-auto max-w-4xl px-4 pt-24 pb-10 min-[1300px]:py-10 sm:px-6 lg:px-8">
-        <BackButton />
+    <PageShell width="wide">
+        <BackButton href="/podcast" />
 
         <header className="mt-8">
           <h1 className="text-balance text-2xl font-semibold tracking-tight text-white/95 sm:text-3xl">
@@ -59,8 +59,7 @@ export default async function PodcastEpisodePage({
             />
           </div>
         </div>
-      </main>
-    </div>
+    </PageShell>
   );
 }
 

@@ -1,5 +1,3 @@
-"use client";
-
 import type { ReactNode } from "react";
 
 export function Column({
@@ -13,7 +11,6 @@ export function Column({
   className?: string;
   scrollable?: boolean;
 }) {
-  const baseClass = "bg-surface border border-border rounded-xl p-5 shadow-sm";
   const sectionClass = scrollable
     ? `flex min-[1300px]:min-h-0 flex-col min-[1300px]:overflow-hidden ${className ?? ""}`
     : className ?? "";

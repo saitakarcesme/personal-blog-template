@@ -4,6 +4,7 @@ import { useTransition, useRef, useState } from "react";
 import { savePost, updatePost, uploadMedia } from "@/actions/adminActions";
 import { useRouter } from "next/navigation";
 import { FiImage, FiVideo, FiLoader } from "react-icons/fi";
+import { useHydratedDate } from "@/hooks/useHydratedDate";
 
 export type PostData = {
     slug?: string;
@@ -19,6 +20,7 @@ export default function PostEditor({ initialData, mode = "create" }: { initialDa
     const router = useRouter();
     const contentRef = useRef<HTMLTextAreaElement>(null);
     const fileInputRef = useRef<HTMLInputElement>(null);
+    const [dateValue, setDateValue] = useHydratedDate(initialData?.date);
 
     const handleSubmit = (formData: FormData) => {
         startTransition(async () => {
@@ -61,8 +63,9 @@ export default function PostEditor({ initialData, mode = "create" }: { initialDa
                     insertTextAtCursor(`\n<video controls src="${result.url}" class="w-full rounded-xl"></video>\n`);
                 }
             }
-        } catch (error: any) {
-            alert(error.message || "Failed to upload file.");
+        } catch (error: unknown) {
+            const message = error instanceof Error ? error.message : "Failed to upload file.";
+            alert(message);
         } finally {
             setUploading(false);
             if (fileInputRef.current) fileInputRef.current.value = '';
@@ -94,7 +97,7 @@ export default function PostEditor({ initialData, mode = "create" }: { initialDa
                 </div>
                 <div>
                     <label className="block text-xs font-bold text-text-subtle uppercase tracking-wider mb-2">Date</label>
-                    <input name="date" required type="date" defaultValue={initialData?.date || new Date().toISOString().split("T")[0]} className="w-full bg-background border border-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent text-text-main transition-all" />
+                    <input name="date" required type="date" value={dateValue} onChange={(event) => setDateValue(event.target.value)} className="w-full bg-background border border-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent text-text-main transition-all" />
                 </div>
             </div>
 

@@ -4,6 +4,7 @@ import { useState, useTransition, useRef } from "react";
 import { saveAlbumPhoto } from "@/actions/adminActions";
 import { useRouter } from "next/navigation";
 import { FiImage, FiX, FiPlus, FiCheck } from "react-icons/fi";
+import { useHydratedDate } from "@/hooks/useHydratedDate";
 
 export default function NewAlbumPhotoPage() {
     const [isPending, startTransition] = useTransition();
@@ -11,6 +12,7 @@ export default function NewAlbumPhotoPage() {
     const [previews, setPreviews] = useState<string[]>([]);
     const [uploadStatus, setUploadStatus] = useState<string>("");
     const [uploadedCount, setUploadedCount] = useState(0);
+    const [dateValue, setDateValue] = useHydratedDate();
     const fileInputRef = useRef<HTMLInputElement>(null);
     const router = useRouter();
 
@@ -153,7 +155,7 @@ export default function NewAlbumPhotoPage() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div>
                         <label className="block text-xs font-bold text-text-subtle uppercase tracking-wider mb-2">Date</label>
-                        <input name="date" required type="date" defaultValue={new Date().toISOString().split("T")[0]} className="w-full bg-background border border-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent text-text-main transition-all" />
+                        <input name="date" required type="date" value={dateValue} onChange={(event) => setDateValue(event.target.value)} className="w-full bg-background border border-border rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-accent/50 focus:border-accent text-text-main transition-all" />
                     </div>
                     <div>
                         <label className="block text-xs font-bold text-text-subtle uppercase tracking-wider mb-2">Description (Optional)</label>

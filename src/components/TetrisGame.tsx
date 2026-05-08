@@ -6,8 +6,31 @@ import React, { useState, useEffect, useCallback } from "react";
 const ROWS = 14;
 const COLS = 10;
 
+type Tetromino = {
+    shape: number[][];
+    color: string;
+    shadow: string;
+};
+
+type BoardCell = [
+    value: number,
+    state: "clear" | "merged",
+    color?: string,
+    shadow?: string,
+];
+
+type Board = BoardCell[][];
+
+type Player = {
+    pos: { x: number; y: number };
+    tetromino: number[][];
+    color: string;
+    shadow: string;
+    collided: boolean;
+};
+
 // Original Tailwind colors
-const TETROMINOS: Record<string, { shape: number[][]; color: string; shadow: string }> = {
+const TETROMINOS: Record<string, Tetromino> = {
     clear: { shape: [[0]], color: "bg-transparent", shadow: "" },
     I: {
         shape: [
@@ -81,12 +104,35 @@ const randomTetromino = () => {
     return TETROMINOS[t];
 };
 
-const createEmptyBoard = () =>
-    Array.from(Array(ROWS), () => new Array(COLS).fill([0, "clear"]));
+const createEmptyRow = (): BoardCell[] =>
+    Array.from({ length: COLS }, (): BoardCell => [0, "clear"]);
+
+const createEmptyBoard = (): Board =>
+    Array.from({ length: ROWS }, () => createEmptyRow());
+
+function checkCollision(
+    tetro: number[][],
+    targetPos: { x: number; y: number },
+    brd: Board
+) {
+    for (let y = 0; y < tetro.length; y += 1) {
+        for (let x = 0; x < tetro[y].length; x += 1) {
+            if (tetro[y][x] !== 0) {
+                const targetRow = brd[y + targetPos.y];
+                const targetCell = targetRow?.[x + targetPos.x];
+
+                if (!targetCell || targetCell[1] === "merged") {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
 
 export function TetrisGame() {
-    const [board, setBoard] = useState(createEmptyBoard());
-    const [player, setPlayer] = useState({
+    const [board, setBoard] = useState<Board>(createEmptyBoard);
+    const [player, setPlayer] = useState<Player>({
         pos: { x: 0, y: 0 },
         tetromino: TETROMINOS.I.shape,
         color: TETROMINOS.I.color,
@@ -111,15 +157,18 @@ export function TetrisGame() {
 
     // We derive the visual board based on the base static board combined with the player's current tetro
 
-    const derivedBoard = board.map((row) =>
-        row.map((cell) => (cell[1] === "clear" ? [0, "clear"] : cell))
+    const derivedBoard: Board = board.map((row) =>
+        row.map((cell): BoardCell => (cell[1] === "clear" ? [0, "clear"] : [...cell]))
     );
 
     if (playing) {
         player.tetromino.forEach((row, y) => {
             row.forEach((value, x) => {
-                if (value !== 0 && derivedBoard[y + player.pos.y]) {
-                    derivedBoard[y + player.pos.y][x + player.pos.x] = [
+                const boardY = y + player.pos.y;
+                const boardX = x + player.pos.x;
+
+                if (value !== 0 && derivedBoard[boardY]?.[boardX]) {
+                    derivedBoard[boardY][boardX] = [
                         value,
                         player.collided ? "merged" : "clear",
                         player.color,
@@ -129,27 +178,6 @@ export function TetrisGame() {
             });
         });
     }
-
-    const checkCollision = (
-        tetro: any[],
-        targetPos: { x: number; y: number },
-        brd: any[]
-    ) => {
-        for (let y = 0; y < tetro.length; y += 1) {
-            for (let x = 0; x < tetro[y].length; x += 1) {
-                if (tetro[y][x] !== 0) {
-                    if (
-                        !brd[y + targetPos.y] ||
-                        !brd[y + targetPos.y][x + targetPos.x] ||
-                        brd[y + targetPos.y][x + targetPos.x][1] === "merged"
-                    ) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
-    };
 
     // Movements
     const movePlayer = useCallback((dir: number) => {
@@ -168,7 +196,9 @@ export function TetrisGame() {
             }
 
             // Merge the piece into the board on collision
-            const newBoard = board.map((row) => [...row]);
+            const newBoard: Board = board.map((row) =>
+                row.map((cell): BoardCell => [...cell])
+            );
             player.tetromino.forEach((row, y) => {
                 row.forEach((value, x) => {
                     if (value !== 0 && newBoard[y + player.pos.y]) {
@@ -183,10 +213,10 @@ export function TetrisGame() {
             });
 
             // Sweep rows and update the board
-            const swept = newBoard.reduce((ack: any[], row: any[]) => {
-                if (row.findIndex((cell: any[]) => cell[0] === 0) === -1) {
+            const swept = newBoard.reduce<Board>((ack, row) => {
+                if (row.findIndex((cell) => cell[0] === 0) === -1) {
                     setScore((prev) => prev + 10);
-                    ack.unshift(new Array(COLS).fill([0, "clear", "", ""]));
+                    ack.unshift(createEmptyRow());
                     return ack;
                 }
                 ack.push(row);
@@ -201,16 +231,12 @@ export function TetrisGame() {
     }, [player, board, resetPlayer]);
 
     const rotatePlayer = useCallback(() => {
-        const clonedPlayer = JSON.parse(JSON.stringify(player));
-        // Transpose
-        const rotated = clonedPlayer.tetromino.map((_: any, index: number) =>
-            clonedPlayer.tetromino.map((col: any) => col[index])
-        );
-        // Reverse
-        clonedPlayer.tetromino = rotated.map((row: any[]) => row.reverse());
+        const rotated = player.tetromino[0]
+            .map((_, index) => player.tetromino.map((row) => row[index]))
+            .map((row) => row.reverse());
 
-        if (!checkCollision(rotated, clonedPlayer.pos, board)) {
-            setPlayer({ ...clonedPlayer, tetromino: rotated });
+        if (!checkCollision(rotated, player.pos, board)) {
+            setPlayer((prev) => ({ ...prev, tetromino: rotated }));
         }
     }, [player, board]);
 
@@ -314,7 +340,7 @@ export function TetrisGame() {
                 {derivedBoard.map((row, y) =>
                     row.map((cell, x) => {
                         const isFilled = cell[0] !== 0;
-                        const colorClass = isFilled ? cell[2] : "bg-transparent";
+                        const colorClass = isFilled ? cell[2] ?? "bg-transparent" : "bg-transparent";
 
                         return (
                             <div

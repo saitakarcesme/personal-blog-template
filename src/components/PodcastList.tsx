@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import type { PodcastEpisode } from "../../data/podcasts";
 
@@ -37,7 +35,7 @@ export function PodcastList({ episodes, limitOnMobile }: { episodes: PodcastEpis
       {limitOnMobile && episodes.length > 1 && (
         <div className="mt-4 sm:hidden">
           <Link
-            href="/podcasts"
+            href="/podcast"
             className="text-sm underline underline-offset-4 hover:opacity-80 text-text-main"
           >
             View all podcasts

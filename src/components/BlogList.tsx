@@ -1,5 +1,4 @@
-"use client";
-
+import Image from "next/image";
 import Link from "next/link";
 import type { PostListItem } from "@/lib/posts";
 
@@ -15,9 +14,15 @@ export function BlogList({ posts, limitOnMobile }: { posts: PostListItem[]; limi
           <li key={post.slug} className={`min-w-0 ${limitOnMobile && index > 0 ? "hidden sm:block" : ""}`}>
             <article className="relative min-w-0 group pb-6 border-b border-border last:border-0 last:pb-0">
               {post.coverImage && (
-                <div className="mb-4 aspect-[2/1] w-full overflow-hidden rounded-xl border border-border bg-surface flex-shrink-0">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src={post.coverImage} alt={post.title} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                <div className="relative mb-4 aspect-[2/1] w-full flex-shrink-0 overflow-hidden rounded-lg border border-border bg-surface">
+                  <Image
+                    src={post.coverImage}
+                    alt={post.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 768px"
+                    quality={72}
+                    className="object-cover transition-transform duration-300 group-hover:scale-105 motion-reduce:transition-none"
+                  />
                 </div>
               )}
               <div className="flex min-w-0 flex-col gap-1">
@@ -55,7 +60,7 @@ export function BlogList({ posts, limitOnMobile }: { posts: PostListItem[]; limi
       {limitOnMobile && posts.length > 1 && (
         <div className="mt-4 sm:hidden">
           <Link
-            href="/posts"
+            href="/blog"
             className="text-sm underline underline-offset-4 hover:opacity-80 text-text-main"
           >
             View all posts

@@ -1,8 +1,7 @@
 "use client";
 
-import { useTransition, useState, useEffect, useRef } from "react";
+import { useCallback, useTransition, useState, useEffect, useRef } from "react";
 import { getAlbumPhotos, deleteAlbumPhoto, saveAlbumPhoto } from "@/actions/adminActions";
-import { useRouter } from "next/navigation";
 import { FiImage, FiTrash2, FiPlus, FiCheck, FiX, FiArrowLeft } from "react-icons/fi";
 import Link from "next/link";
 
@@ -17,20 +16,18 @@ export default function EditAlbumPage() {
     const [uploadingCount, setUploadingCount] = useState(0);
     const [uploadedCount, setUploadedCount] = useState(0);
     const fileInputRef = useRef<HTMLInputElement>(null);
-    const router = useRouter();
 
-    const loadPhotos = () => {
+    const loadPhotos = useCallback(() => {
         startTransition(async () => {
             const data = await getAlbumPhotos();
             setPhotos(data);
             setLoading(false);
         });
-    };
+    }, [startTransition]);
 
     useEffect(() => {
         loadPhotos();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [loadPhotos]);
 
     const handleDelete = (id: string) => {
         if (confirmDeleteId !== id) {
