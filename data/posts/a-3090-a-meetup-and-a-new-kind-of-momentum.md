@@ -2,9 +2,10 @@
 title: "A 3090, A Meetup, And A New Kind Of Momentum"
 date: "2026-05-08"
 author: "ISA"
+image: "/images/posts/rtx-3090-meetup.jpeg"
 ---
 
-![pc.jpeg](/media/1778258872608-pc.jpeg)
+![RTX 3090 installed in a desktop PC](/images/posts/rtx-3090-meetup.jpeg)
 
 Today I want to write about something that is both personal and technical, but maybe more personal for now.
 
