@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import { FiHome, FiEdit3, FiGrid, FiMic, FiMusic, FiRadio, FiStar } from "react-icons/fi";
+import { FiHome, FiEdit3, FiGrid, FiMic, FiMusic, FiRadio, FiStar, FiCpu } from "react-icons/fi";
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -27,6 +27,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             <Link href="/admin/podcasts/new" className="hover:text-text-main transition-colors flex items-center gap-1.5"><FiMic /> Podcast</Link>
             <Link href="/admin/cinema" className="hover:text-text-main transition-colors flex items-center gap-1.5"><FiStar /> Cinema</Link>
             <Link href="/admin/radio" className="hover:text-text-main transition-colors flex items-center gap-1.5"><FiMusic /> Radio</Link>
+            <Link href="/admin/engineering" className="hover:text-text-main transition-colors flex items-center gap-1.5"><FiCpu /> Engineering</Link>
             <div className="w-[1px] h-4 bg-border mx-2"></div>
             <Link href="/" className="hover:text-text-main transition-colors flex items-center gap-1.5" target="_blank"><FiHome /> Live Site</Link>
           </nav>

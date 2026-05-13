@@ -1,0 +1,208 @@
+{
+  "hero": {
+    "label": "Engineering",
+    "title": "Engineering",
+    "subtitle": "My setup, coding workflow, experiments, and technical notes."
+  },
+  "categories": [
+    {
+      "id": "cat-machine",
+      "title": "Machine",
+      "slug": "machine",
+      "description": "Main development machine, GPU experiments, and local work.",
+      "order": 10,
+      "visible": true
+    },
+    {
+      "id": "cat-editor",
+      "title": "Editor",
+      "slug": "editor",
+      "description": "Code editor, extensions, terminal, and daily writing environment.",
+      "order": 20,
+      "visible": true
+    },
+    {
+      "id": "cat-ai-workflow",
+      "title": "AI Coding Workflow",
+      "slug": "ai-coding-workflow",
+      "description": "Claude Code, Codex, prompt-driven development, and review habits.",
+      "order": 30,
+      "visible": true
+    },
+    {
+      "id": "cat-local-models",
+      "title": "Local Models",
+      "slug": "local-models",
+      "description": "Local LLM experiments, GPU testing, and agent ideas.",
+      "order": 40,
+      "visible": true
+    },
+    {
+      "id": "cat-hosting",
+      "title": "Hosting / Deployment",
+      "slug": "hosting-deployment",
+      "description": "How personal projects are published, tested, and maintained.",
+      "order": 50,
+      "visible": true
+    },
+    {
+      "id": "cat-design",
+      "title": "Design System",
+      "slug": "design-system",
+      "description": "UI preferences, components, spacing, typography, and visual rules.",
+      "order": 60,
+      "visible": true
+    }
+  ],
+  "workflow": [
+    {
+      "id": "wf-1",
+      "stepLabel": "Step 01",
+      "title": "Manual Coding",
+      "description": "Writing everything by hand, learning through direct implementation.",
+      "order": 10,
+      "visible": true
+    },
+    {
+      "id": "wf-2",
+      "stepLabel": "Step 02",
+      "title": "AI-Assisted Coding",
+      "description": "Using AI as a pair programmer while still reviewing and understanding the code.",
+      "order": 20,
+      "visible": true
+    },
+    {
+      "id": "wf-3",
+      "stepLabel": "Step 03",
+      "title": "Agentic Workflow",
+      "description": "Working with tools like Claude Code and Codex to ship larger features step by step.",
+      "order": 30,
+      "visible": true
+    },
+    {
+      "id": "wf-4",
+      "stepLabel": "Step 04",
+      "title": "Local AI Experiments",
+      "description": "Testing local models, GPU workflows, and personal automation ideas.",
+      "order": 40,
+      "visible": true
+    }
+  ],
+  "log": [
+    {
+      "id": "log-1",
+      "title": "Added Cinema scoring system",
+      "description": "Personal ISA-score slider with IMDb metadata lookup.",
+      "status": "Shipped",
+      "dateLabel": "",
+      "order": 10,
+      "visible": true
+    },
+    {
+      "id": "log-2",
+      "title": "Planned Radio feature",
+      "description": "Songs, albums, and playlists with notes and scores.",
+      "status": "Shipped",
+      "dateLabel": "",
+      "order": 20,
+      "visible": true
+    },
+    {
+      "id": "log-3",
+      "title": "Tested local LLM workflow",
+      "description": "Running smaller models locally to prototype agent ideas.",
+      "status": "Ongoing",
+      "dateLabel": "",
+      "order": 30,
+      "visible": true
+    },
+    {
+      "id": "log-4",
+      "title": "Improved personal blog structure",
+      "description": "Cleaner sections, consistent cards, and shared primitives.",
+      "status": "Ongoing",
+      "dateLabel": "",
+      "order": 40,
+      "visible": true
+    },
+    {
+      "id": "log-5",
+      "title": "Explored AI-assisted development flow",
+      "description": "Prompt-driven feature work and review-first habits.",
+      "status": "Ongoing",
+      "dateLabel": "",
+      "order": 50,
+      "visible": true
+    }
+  ],
+  "experiments": [
+    {
+      "id": "ex-1",
+      "title": "Local LLM Discord Agent",
+      "slug": "local-llm-discord-agent",
+      "description": "A small assistant that lives in Discord and runs against a local model.",
+      "status": "Testing",
+      "relatedLink": "",
+      "order": 10,
+      "visible": true
+    },
+    {
+      "id": "ex-2",
+      "title": "Personal Blog CMS",
+      "slug": "personal-blog-cms",
+      "description": "The admin surface that powers this site without leaving the repo.",
+      "status": "Active",
+      "relatedLink": "",
+      "order": 20,
+      "visible": true
+    },
+    {
+      "id": "ex-3",
+      "title": "Movie and Music API Integrations",
+      "slug": "movie-music-api-integrations",
+      "description": "Pulling metadata from IMDb and music sources into Cinema and Radio.",
+      "status": "Active",
+      "relatedLink": "",
+      "order": 30,
+      "visible": true
+    },
+    {
+      "id": "ex-4",
+      "title": "AI Research Assistant",
+      "slug": "ai-research-assistant",
+      "description": "A focused tool for reading, summarizing, and cross-linking notes.",
+      "status": "Planned",
+      "relatedLink": "",
+      "order": 40,
+      "visible": true
+    },
+    {
+      "id": "ex-5",
+      "title": "Automation Dashboard",
+      "slug": "automation-dashboard",
+      "description": "A single board for personal scripts, schedulers, and small services.",
+      "status": "Planned",
+      "relatedLink": "",
+      "order": 50,
+      "visible": true
+    },
+    {
+      "id": "ex-6",
+      "title": "GPU Testing Lab",
+      "slug": "gpu-testing-lab",
+      "description": "Benchmarking local inference and small training runs on the home rig.",
+      "status": "Testing",
+      "relatedLink": "",
+      "order": 60,
+      "visible": true
+    }
+  ],
+  "principles": [
+    { "id": "p-1", "text": "Ship fast, then clean.", "order": 10, "visible": true },
+    { "id": "p-2", "text": "AI first, but understand the code.", "order": 20, "visible": true },
+    { "id": "p-3", "text": "Prefer simple architecture.", "order": 30, "visible": true },
+    { "id": "p-4", "text": "Build small internal tools.", "order": 40, "visible": true },
+    { "id": "p-5", "text": "Design matters, but function comes first.", "order": 50, "visible": true },
+    { "id": "p-6", "text": "Keep personal projects alive.", "order": 60, "visible": true }
+  ]
+}

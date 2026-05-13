@@ -36,6 +36,11 @@ const destinations = [
     description: "Conversations and episodes collected in one place.",
   },
   {
+    href: "/engineering",
+    title: "Engineering",
+    description: "Setup, workflow, experiments, and technical notes.",
+  },
+  {
     href: "/profile",
     title: "Profile",
     description: "About me, social links, Tetris, and the album.",
@@ -96,7 +101,7 @@ export default function Home() {
 
         <section
           aria-label="Site sections"
-          className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6"
+          className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
         >
           {destinations.map((item) => (
             <Link

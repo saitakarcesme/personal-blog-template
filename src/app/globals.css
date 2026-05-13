@@ -16,6 +16,7 @@
   --text-subtle: #6b6b6b;
 
   --accent: #d4d4d4;
+  --accent-indigo: #6366f1;
 }
 
 @theme inline {
@@ -30,6 +31,7 @@
   --color-text-muted: var(--text-muted);
   --color-text-subtle: var(--text-subtle);
   --color-accent: var(--accent);
+  --color-accent-indigo: var(--accent-indigo);
 
   --font-sans: var(--font-geist-sans);
   --font-serif: var(--font-newsreader);

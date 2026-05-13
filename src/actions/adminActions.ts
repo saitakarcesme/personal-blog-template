@@ -591,3 +591,302 @@ export async function getAlbumPhotos() {
 
     return photos;
 }
+
+// ---------- Engineering ----------
+
+const engineeringDir = () => path.join(process.cwd(), "data", "engineering");
+const engineeringContentFile = () => path.join(engineeringDir(), "content.json");
+const engineeringItemsDir = () => path.join(engineeringDir(), "items");
+
+type EngHero = { label: string; title: string; subtitle: string };
+type EngCategory = { id: string; title: string; slug: string; description: string; order: number; visible: boolean };
+type EngWorkflowStep = { id: string; stepLabel: string; title: string; description: string; order: number; visible: boolean };
+type EngLogEntry = { id: string; title: string; description: string; status: string; dateLabel: string; order: number; visible: boolean };
+type EngExperiment = { id: string; title: string; slug: string; description: string; status: string; relatedLink: string; order: number; visible: boolean };
+type EngPrinciple = { id: string; text: string; order: number; visible: boolean };
+type EngSpec = { key: string; value: string };
+type EngContent = {
+    hero: EngHero;
+    categories: EngCategory[];
+    workflow: EngWorkflowStep[];
+    log: EngLogEntry[];
+    experiments: EngExperiment[];
+    principles: EngPrinciple[];
+};
+
+function readEngineeringContent(): EngContent {
+    const file = engineeringContentFile();
+    if (!fs.existsSync(file)) {
+        return {
+            hero: { label: "Engineering", title: "Engineering", subtitle: "" },
+            categories: [], workflow: [], log: [], experiments: [], principles: [],
+        };
+    }
+    const raw = fs.readFileSync(file, "utf8");
+    const parsed = JSON.parse(raw) as Partial<EngContent>;
+    return {
+        hero: parsed.hero ?? { label: "Engineering", title: "Engineering", subtitle: "" },
+        categories: parsed.categories ?? [],
+        workflow: parsed.workflow ?? [],
+        log: parsed.log ?? [],
+        experiments: parsed.experiments ?? [],
+        principles: parsed.principles ?? [],
+    };
+}
+
+function writeEngineeringContent(data: EngContent) {
+    if (!fs.existsSync(engineeringDir())) {
+        fs.mkdirSync(engineeringDir(), { recursive: true });
+    }
+    fs.writeFileSync(engineeringContentFile(), JSON.stringify(data, null, 2) + "\n", "utf8");
+}
+
+function newId(prefix: string) {
+    return `${prefix}-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
+}
+
+function toBool(value: FormDataEntryValue | null) {
+    if (value === null) return false;
+    const s = String(value).toLowerCase();
+    return s === "true" || s === "1" || s === "on" || s === "yes";
+}
+
+function toOrder(value: FormDataEntryValue | null, fallback: number) {
+    const n = Number(value);
+    return Number.isFinite(n) ? n : fallback;
+}
+
+export async function updateEngineeringHero(formData: FormData) {
+    requireDevelopment();
+    const content = readEngineeringContent();
+    content.hero = {
+        label: String(formData.get("label") || "").trim() || "Engineering",
+        title: String(formData.get("title") || "").trim() || "Engineering",
+        subtitle: String(formData.get("subtitle") || "").trim(),
+    };
+    writeEngineeringContent(content);
+    return { success: true };
+}
+
+function parseListFromFormData<T>(
+    formData: FormData,
+    prefix: string,
+    builders: { fields: string[]; build: (raw: Record<string, FormDataEntryValue | null>, index: number) => T | null },
+): T[] {
+    const countRaw = formData.get(`${prefix}__count`);
+    const count = Number(countRaw);
+    if (!Number.isFinite(count) || count <= 0) return [];
+    const out: T[] = [];
+    for (let i = 0; i < count; i++) {
+        const raw: Record<string, FormDataEntryValue | null> = {};
+        for (const field of builders.fields) {
+            raw[field] = formData.get(`${prefix}__${i}__${field}`);
+        }
+        const item = builders.build(raw, i);
+        if (item) out.push(item);
+    }
+    return out;
+}
+
+export async function saveEngineeringCategories(formData: FormData) {
+    requireDevelopment();
+    const content = readEngineeringContent();
+    content.categories = parseListFromFormData<EngCategory>(formData, "category", {
+        fields: ["id", "title", "slug", "description", "order", "visible"],
+        build: (raw, index) => {
+            const title = String(raw.title || "").trim();
+            const slug = slugify(String(raw.slug || "").trim() || title);
+            if (!title || !slug) return null;
+            return {
+                id: String(raw.id || "").trim() || newId("cat"),
+                title,
+                slug,
+                description: String(raw.description || "").trim(),
+                order: toOrder(raw.order, (index + 1) * 10),
+                visible: toBool(raw.visible),
+            };
+        },
+    });
+    writeEngineeringContent(content);
+    return { success: true };
+}
+
+export async function saveEngineeringWorkflow(formData: FormData) {
+    requireDevelopment();
+    const content = readEngineeringContent();
+    content.workflow = parseListFromFormData<EngWorkflowStep>(formData, "workflow", {
+        fields: ["id", "stepLabel", "title", "description", "order", "visible"],
+        build: (raw, index) => {
+            const title = String(raw.title || "").trim();
+            if (!title) return null;
+            return {
+                id: String(raw.id || "").trim() || newId("wf"),
+                stepLabel: String(raw.stepLabel || "").trim() || `Step ${String(index + 1).padStart(2, "0")}`,
+                title,
+                description: String(raw.description || "").trim(),
+                order: toOrder(raw.order, (index + 1) * 10),
+                visible: toBool(raw.visible),
+            };
+        },
+    });
+    writeEngineeringContent(content);
+    return { success: true };
+}
+
+export async function saveEngineeringLog(formData: FormData) {
+    requireDevelopment();
+    const content = readEngineeringContent();
+    content.log = parseListFromFormData<EngLogEntry>(formData, "log", {
+        fields: ["id", "title", "description", "status", "dateLabel", "order", "visible"],
+        build: (raw, index) => {
+            const title = String(raw.title || "").trim();
+            if (!title) return null;
+            return {
+                id: String(raw.id || "").trim() || newId("log"),
+                title,
+                description: String(raw.description || "").trim(),
+                status: String(raw.status || "").trim() || "Ongoing",
+                dateLabel: String(raw.dateLabel || "").trim(),
+                order: toOrder(raw.order, (index + 1) * 10),
+                visible: toBool(raw.visible),
+            };
+        },
+    });
+    writeEngineeringContent(content);
+    return { success: true };
+}
+
+export async function saveEngineeringExperiments(formData: FormData) {
+    requireDevelopment();
+    const content = readEngineeringContent();
+    content.experiments = parseListFromFormData<EngExperiment>(formData, "experiment", {
+        fields: ["id", "title", "slug", "description", "status", "relatedLink", "order", "visible"],
+        build: (raw, index) => {
+            const title = String(raw.title || "").trim();
+            if (!title) return null;
+            const slug = slugify(String(raw.slug || "").trim() || title);
+            return {
+                id: String(raw.id || "").trim() || newId("ex"),
+                title,
+                slug,
+                description: String(raw.description || "").trim(),
+                status: String(raw.status || "").trim() || "Planned",
+                relatedLink: String(raw.relatedLink || "").trim(),
+                order: toOrder(raw.order, (index + 1) * 10),
+                visible: toBool(raw.visible),
+            };
+        },
+    });
+    writeEngineeringContent(content);
+    return { success: true };
+}
+
+export async function saveEngineeringPrinciples(formData: FormData) {
+    requireDevelopment();
+    const content = readEngineeringContent();
+    content.principles = parseListFromFormData<EngPrinciple>(formData, "principle", {
+        fields: ["id", "text", "order", "visible"],
+        build: (raw, index) => {
+            const text = String(raw.text || "").trim();
+            if (!text) return null;
+            return {
+                id: String(raw.id || "").trim() || newId("p"),
+                text,
+                order: toOrder(raw.order, (index + 1) * 10),
+                visible: toBool(raw.visible),
+            };
+        },
+    });
+    writeEngineeringContent(content);
+    return { success: true };
+}
+
+function parseSpecsFromForm(formData: FormData): EngSpec[] {
+    const countRaw = formData.get("specs__count");
+    const count = Number(countRaw);
+    if (!Number.isFinite(count) || count <= 0) return [];
+    const specs: EngSpec[] = [];
+    for (let i = 0; i < count; i++) {
+        const key = String(formData.get(`specs__${i}__key`) || "").trim();
+        const value = String(formData.get(`specs__${i}__value`) || "").trim();
+        if (!key) continue;
+        specs.push({ key, value });
+    }
+    return specs;
+}
+
+function buildEngineeringItemMarkdown(formData: FormData, createdAt?: string) {
+    const title = String(formData.get("title") || "").trim();
+    const requestedSlug = String(formData.get("slug") || "").trim();
+    const slug = slugify(requestedSlug || title);
+    const category = slugify(String(formData.get("category") || "").trim());
+    const shortDescription = String(formData.get("shortDescription") || "").trim();
+    const fullDescription = String(formData.get("fullDescription") || "").trim();
+    const useCase = String(formData.get("useCase") || "").trim();
+    const status = String(formData.get("status") || "").trim() || "Active";
+    const imageUrl = String(formData.get("imageUrl") || "").trim();
+    const featured = toBool(formData.get("featured"));
+    const order = toOrder(formData.get("order"), 100);
+    const visible = formData.get("visible") === null ? true : toBool(formData.get("visible"));
+    const specs = parseSpecsFromForm(formData);
+    const now = new Date().toISOString();
+
+    if (!title || !slug || !category) {
+        throw new Error("Title, slug, and category are required.");
+    }
+
+    const specsYaml = specs.length === 0
+        ? "specs: []"
+        : "specs:\n" + specs.map((s) => `  - key: ${quoted(s.key)}\n    value: ${quoted(s.value)}`).join("\n");
+
+    const fileContent = `---
+title: ${quoted(title)}
+slug: ${quoted(slug)}
+category: ${quoted(category)}
+shortDescription: ${quoted(shortDescription)}
+useCase: ${quoted(useCase)}
+status: ${quoted(status)}
+imageUrl: ${quoted(imageUrl)}
+featured: ${featured}
+order: ${order}
+visible: ${visible}
+${specsYaml}
+createdAt: ${quoted(createdAt || now)}
+updatedAt: ${quoted(now)}
+---
+
+${fullDescription}
+`;
+    return { slug, fileContent };
+}
+
+export async function saveEngineeringItem(formData: FormData) {
+    requireDevelopment();
+    const dir = engineeringItemsDir();
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+    const { slug, fileContent } = buildEngineeringItemMarkdown(formData);
+    fs.writeFileSync(path.join(dir, `${slug}.md`), fileContent, "utf8");
+    return { success: true, slug };
+}
+
+export async function updateEngineeringItem(originalSlug: string, formData: FormData) {
+    requireDevelopment();
+    const dir = engineeringItemsDir();
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+    const createdAt = String(formData.get("createdAt") || "").trim() || undefined;
+    const { slug, fileContent } = buildEngineeringItemMarkdown(formData, createdAt);
+    if (originalSlug !== slug) {
+        const originalPath = path.join(dir, `${originalSlug}.md`);
+        if (fs.existsSync(originalPath)) fs.unlinkSync(originalPath);
+    }
+    fs.writeFileSync(path.join(dir, `${slug}.md`), fileContent, "utf8");
+    return { success: true, slug };
+}
+
+export async function deleteEngineeringItem(slug: string) {
+    requireDevelopment();
+    const safeSlug = slugify(slug);
+    const filePath = path.join(engineeringItemsDir(), `${safeSlug}.md`);
+    if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+    return { success: true };
+}
