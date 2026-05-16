@@ -11,7 +11,7 @@ export function ProjectList({ projects, limitOnMobile }: { projects: ProjectList
             <div className="flex flex-col gap-3">
                 {projects.map((p, i) => (
                     <Link key={p.slug} href={`/projects/${p.slug}`} className={`group ${limitOnMobile && i > 0 ? "hidden sm:block" : ""}`}>
-                        <div className="flex items-center justify-start p-4 rounded-xl border border-border bg-surface-hover/30 hover:bg-surface-hover transition-colors">
+                        <div className="transition-colors flex items-center justify-start p-4 rounded-xl border border-border bg-surface-hover/30 hover:bg-surface-hover">
                             <h3 className="text-sm font-semibold text-text-main font-serif group-hover:underline">{p.title}</h3>
                         </div>
                     </Link>

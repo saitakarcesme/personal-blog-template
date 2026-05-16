@@ -42,7 +42,7 @@ export default async function EngineeringCategoryPage({
             <article
               key={item.slug}
               id={item.slug}
-              className="flex scroll-mt-24 flex-col gap-3 rounded-lg border border-border bg-surface/95 p-5 transition-colors hover:border-accent-indigo/40"
+              className="transition-colors flex scroll-mt-24 flex-col gap-3 rounded-lg border border-border bg-surface/95 p-5"
             >
               {item.imageUrl ? (
                 <div className="overflow-hidden rounded-md border border-border bg-background">
@@ -59,7 +59,7 @@ export default async function EngineeringCategoryPage({
                   {item.title}
                 </h2>
                 {item.status ? (
-                  <span className="inline-flex items-center rounded-md border border-accent-indigo/40 bg-accent-indigo/10 px-2 py-0.5 text-[11px] font-medium uppercase tracking-wide text-accent-indigo">
+                  <span className="inline-flex items-center rounded-md border border-border bg-surface-hover px-2 py-0.5 text-[11px] font-medium uppercase tracking-wide text-text-main">
                     {item.status}
                   </span>
                 ) : null}
@@ -96,7 +96,7 @@ export default async function EngineeringCategoryPage({
           yet. Add one from{" "}
           <Link
             href="/admin/engineering/items/new"
-            className="text-accent-indigo hover:underline"
+            className="text-text-main underline hover:text-text-muted"
           >
             /admin/engineering/items/new
           </Link>

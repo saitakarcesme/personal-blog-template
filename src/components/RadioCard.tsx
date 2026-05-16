@@ -5,7 +5,7 @@ import { MediaArtwork } from "@/components/MediaArtwork";
 
 export function RadioCard({ entry }: { entry: RadioListItem }) {
   return (
-    <article className="group grid gap-5 rounded-lg border border-border bg-surface/70 p-4 transition-colors hover:bg-surface-hover/70 sm:grid-cols-[140px_minmax(0,1fr)]">
+    <article className="transition-colors group grid gap-5 rounded-lg border border-border bg-surface/70 p-4 hover:bg-surface-hover/70 sm:grid-cols-[140px_minmax(0,1fr)]">
       <Link
         href={`/radio/${entry.slug}`}
         className="relative aspect-square overflow-hidden rounded-md bg-surface"

@@ -11,7 +11,7 @@ function StatusBadge({ value, kind }: { value: string; kind: "item" | "experimen
   const normalized = value.toLowerCase();
   const accent =
     normalized === "active" || normalized === "shipped"
-      ? "border-accent-indigo/40 bg-accent-indigo/10 text-accent-indigo"
+      ? "border-border bg-surface-hover text-text-main"
       : normalized === "testing" || normalized === "ongoing"
         ? "border-border bg-surface-hover text-text-main"
         : normalized === "planned"
@@ -38,7 +38,7 @@ function SectionHeading({
 }) {
   return (
     <div className="mb-6">
-      <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-accent-indigo/80">
+      <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-text-subtle">
         {eyebrow}
       </p>
       <h2 className="font-serif text-2xl font-bold text-text-main sm:text-3xl">
@@ -61,17 +61,11 @@ export default function EngineeringPage() {
 
   return (
     <PageShell width="wide" className="flex flex-col gap-14">
-      <div className="relative">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute -inset-x-12 -top-10 -z-10 h-56 rounded-full bg-accent-indigo/10 blur-3xl"
-        />
-        <PageHeader
-          eyebrow={hero.label || "Engineering"}
-          title={hero.title || "Engineering"}
-          description={hero.subtitle}
-        />
-      </div>
+      <PageHeader
+        eyebrow={hero.label || "Engineering"}
+        title={hero.title || "Engineering"}
+        description={hero.subtitle}
+      />
 
       {categories.length > 0 ? (
         <section aria-label="Current stack">
@@ -87,7 +81,7 @@ export default function EngineeringPage() {
                 <Link
                   key={cat.id}
                   href={`/engineering/${cat.slug}`}
-                  className="group flex min-h-32 flex-col justify-between rounded-lg border border-border bg-surface/95 p-5 transition-colors hover:border-accent-indigo/40 hover:bg-surface-hover"
+                  className="transition-colors group flex min-h-32 flex-col justify-between rounded-lg border border-border bg-surface/95 p-5 hover:bg-surface-hover"
                 >
                   <div>
                     <h3 className="font-serif text-xl font-bold text-text-main">
@@ -101,7 +95,7 @@ export default function EngineeringPage() {
                     <span>
                       {count} {count === 1 ? "item" : "items"}
                     </span>
-                    <span className="font-semibold transition-colors group-hover:text-accent-indigo">
+                    <span className="font-semibold transition-colors group-hover:text-text-main">
                       Open -&gt;
                     </span>
                   </div>
@@ -124,7 +118,7 @@ export default function EngineeringPage() {
               <Link
                 key={item.slug}
                 href={`/engineering/${item.category}#${item.slug}`}
-                className="group flex flex-col rounded-lg border border-border bg-surface/95 p-5 transition-colors hover:border-accent-indigo/40 hover:bg-surface-hover"
+                className="transition-colors group flex flex-col rounded-lg border border-border bg-surface/95 p-5 hover:bg-surface-hover"
               >
                 <div className="flex items-start justify-between gap-3">
                   <h3 className="font-serif text-lg font-bold text-text-main">
@@ -160,11 +154,11 @@ export default function EngineeringPage() {
               <li key={step.id} className="relative pb-8 pl-6 last:pb-0">
                 <span
                   aria-hidden
-                  className="absolute -left-[7px] top-1.5 flex h-3 w-3 items-center justify-center rounded-full border border-accent-indigo/40 bg-background"
+                  className="absolute -left-[7px] top-1.5 flex h-3 w-3 items-center justify-center rounded-full border border-border bg-background"
                 >
-                  <span className="h-1.5 w-1.5 rounded-full bg-accent-indigo" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-text-subtle" />
                 </span>
-                <p className="text-xs font-semibold uppercase tracking-wide text-accent-indigo/80">
+                <p className="text-xs font-semibold uppercase tracking-wide text-text-subtle">
                   {step.stepLabel}
                 </p>
                 <h3 className="mt-1 font-serif text-xl font-bold text-text-main">
@@ -241,7 +235,7 @@ export default function EngineeringPage() {
                 </>
               );
               const className =
-                "flex min-h-36 flex-col justify-between rounded-lg border border-border bg-surface/95 p-5 transition-colors hover:border-accent-indigo/40 hover:bg-surface-hover";
+                "transition-colors flex min-h-36 flex-col justify-between rounded-lg border border-border bg-surface/95 p-5 hover:bg-surface-hover";
               return experiment.relatedLink ? (
                 <a
                   key={experiment.id}
@@ -273,9 +267,9 @@ export default function EngineeringPage() {
             {principles.map((principle, index) => (
               <li
                 key={principle.id}
-                className="flex items-start gap-3 rounded-lg border border-border bg-surface/95 p-4 text-sm leading-6 transition-colors hover:border-accent-indigo/40 hover:bg-surface-hover"
+                className="transition-colors flex items-start gap-3 rounded-lg border border-border bg-surface/95 p-4 text-sm leading-6 hover:bg-surface-hover"
               >
-                <span className="mt-0.5 font-serif text-sm font-bold text-accent-indigo">
+                <span className="mt-0.5 font-serif text-sm font-bold text-text-muted">
                   {String(index + 1).padStart(2, "0")}
                 </span>
                 <span className="text-text-main">{principle.text}</span>
