@@ -2,14 +2,14 @@
   "hero": {
     "label": "Engineering",
     "title": "Engineering",
-    "subtitle": "My setup, coding workflow, experiments, and technical notes."
+    "subtitle": "My machines, the tools I code with, how I work with AI, and the experiments I keep alive on the side. A living page, not a resume."
   },
   "categories": [
     {
       "id": "cat-machine",
       "title": "Machine",
       "slug": "machine",
-      "description": "Main development machine, GPU experiments, and local work.",
+      "description": "The hardware I actually work on every day: a Windows desktop for heavy work and local models, a MacBook Air for portable coding, plus the peripherals and devices around them.",
       "order": 10,
       "visible": true
     },
@@ -17,7 +17,7 @@
       "id": "cat-editor",
       "title": "Editor",
       "slug": "editor",
-      "description": "Code editor, extensions, terminal, and daily writing environment.",
+      "description": "Where I write code. AI-native editors and IDEs I switch between depending on the project.",
       "order": 20,
       "visible": true
     },
@@ -25,7 +25,7 @@
       "id": "cat-ai-workflow",
       "title": "AI Coding Workflow",
       "slug": "ai-coding-workflow",
-      "description": "Claude Code, Codex, prompt-driven development, and review habits.",
+      "description": "Terminal agents, AI pair-programming tools, and the subscriptions that power them. This is how most features actually get built.",
       "order": 30,
       "visible": true
     },
@@ -33,24 +33,8 @@
       "id": "cat-local-models",
       "title": "Local Models",
       "slug": "local-models",
-      "description": "Local LLM experiments, GPU testing, and agent ideas.",
+      "description": "Local LLMs I run on the RTX 4060 Ti for automation, research, and article-generation experiments.",
       "order": 40,
-      "visible": true
-    },
-    {
-      "id": "cat-hosting",
-      "title": "Hosting / Deployment",
-      "slug": "hosting-deployment",
-      "description": "How personal projects are published, tested, and maintained.",
-      "order": 50,
-      "visible": true
-    },
-    {
-      "id": "cat-design",
-      "title": "Design System",
-      "slug": "design-system",
-      "description": "UI preferences, components, spacing, typography, and visual rules.",
-      "order": 60,
       "visible": true
     }
   ],
@@ -59,7 +43,7 @@
       "id": "wf-1",
       "stepLabel": "Step 01",
       "title": "Manual Coding",
-      "description": "Writing everything by hand, learning through direct implementation.",
+      "description": "Writing code by hand to actually learn the language and the problem. Java and C/CMake school work started here; it is still my baseline for understanding.",
       "order": 10,
       "visible": true
     },
@@ -67,50 +51,58 @@
       "id": "wf-2",
       "stepLabel": "Step 02",
       "title": "AI-Assisted Coding",
-      "description": "Using AI as a pair programmer while still reviewing and understanding the code.",
+      "description": "Explaining the feature or bug to an AI tool first, asking for a roadmap and file-level changes, then implementing and testing step by step.",
       "order": 20,
       "visible": true
     },
     {
       "id": "wf-3",
       "stepLabel": "Step 03",
-      "title": "Agentic Workflow",
-      "description": "Working with tools like Claude Code and Codex to ship larger features step by step.",
+      "title": "Terminal Agents",
+      "description": "Using Codex and Claude Code in the terminal to ship larger features in steps, while still reading and understanding the diffs before they land.",
       "order": 30,
       "visible": true
     },
     {
       "id": "wf-4",
       "stepLabel": "Step 04",
-      "title": "Local AI Experiments",
-      "description": "Testing local models, GPU workflows, and personal automation ideas.",
+      "title": "Local LLM Experiments",
+      "description": "Testing Qwen and Gemma locally for automation, research, and source-based article generation, prototyping agent-like workflows off the cloud.",
       "order": 40,
+      "visible": true
+    },
+    {
+      "id": "wf-5",
+      "stepLabel": "Step 05",
+      "title": "Review and Cleanup",
+      "description": "Once the feature works, I go back and improve structure, move hardcoded content into admin-editable data, and tidy the parts I rushed.",
+      "order": 50,
       "visible": true
     }
   ],
   "log": [
     {
       "id": "log-1",
-      "title": "Added Cinema scoring system",
-      "description": "Personal ISA-score slider with IMDb metadata lookup.",
+      "title": "Engineering section with admin management",
+      "description": "Categories, gear cards, workflow, log, experiments, and principles, all editable from /admin/engineering instead of hardcoded.",
       "status": "Shipped",
-      "dateLabel": "",
+      "dateLabel": "May 2026",
       "order": 10,
       "visible": true
     },
     {
       "id": "log-2",
-      "title": "Planned Radio feature",
-      "description": "Songs, albums, and playlists with notes and scores.",
+      "title": "Cinema and Radio sections",
+      "description": "Personal scoring, notes, and metadata lookups for films and music on the blog.",
       "status": "Shipped",
-      "dateLabel": "",
+      "dateLabel": "May 2026",
       "order": 20,
       "visible": true
     },
     {
       "id": "log-3",
-      "title": "Tested local LLM workflow",
-      "description": "Running smaller models locally to prototype agent ideas.",
+      "title": "Association Management System",
+      "description": "Association/community tool: admin features, room/space management, PDFs, notifications, backups, and tests. Still in active development.",
       "status": "Ongoing",
       "dateLabel": "",
       "order": 30,
@@ -118,59 +110,86 @@
     },
     {
       "id": "log-4",
-      "title": "Improved personal blog structure",
-      "description": "Cleaner sections, consistent cards, and shared primitives.",
-      "status": "Ongoing",
+      "title": "Academic article automation",
+      "description": "Source-based local-LLM writing pipeline that drafts academic-style articles from provided sources. Prompts and structure still being tuned.",
+      "status": "Testing",
       "dateLabel": "",
       "order": 40,
       "visible": true
     },
     {
       "id": "log-5",
-      "title": "Explored AI-assisted development flow",
-      "description": "Prompt-driven feature work and review-first habits.",
-      "status": "Ongoing",
+      "title": "Local LLM workflow on the home GPU",
+      "description": "Running qwen3:32b and gemma 3 12b locally to prototype automation and agent ideas without cloud cost.",
+      "status": "Testing",
       "dateLabel": "",
       "order": 50,
+      "visible": true
+    },
+    {
+      "id": "log-6",
+      "title": "Personal blog structure cleanup",
+      "description": "Consistent cards, shared primitives, and moving more content behind the admin panel.",
+      "status": "Ongoing",
+      "dateLabel": "",
+      "order": 60,
+      "visible": true
+    },
+    {
+      "id": "log-7",
+      "title": "Local LLM Discord agent",
+      "description": "A small assistant in Discord backed by a local model. Scoped but not started.",
+      "status": "Planned",
+      "dateLabel": "",
+      "order": 70,
+      "visible": true
+    },
+    {
+      "id": "log-8",
+      "title": "Automation dashboard",
+      "description": "One place for personal scripts, schedulers, and small services. Idea stage.",
+      "status": "Planned",
+      "dateLabel": "",
+      "order": 80,
       "visible": true
     }
   ],
   "experiments": [
     {
       "id": "ex-1",
-      "title": "Local LLM Discord Agent",
-      "slug": "local-llm-discord-agent",
-      "description": "A small assistant that lives in Discord and runs against a local model.",
-      "status": "Testing",
+      "title": "Association Management System",
+      "slug": "association-management-system",
+      "description": "Association/community management app: admin features, room and space management, PDF generation, notifications, backups, and testing. Tags: TypeScript, Next.js, admin, PDFs.",
+      "status": "Active",
       "relatedLink": "",
       "order": 10,
       "visible": true
     },
     {
       "id": "ex-2",
-      "title": "Personal Blog CMS",
-      "slug": "personal-blog-cms",
-      "description": "The admin surface that powers this site without leaving the repo.",
-      "status": "Active",
+      "title": "Academic Article Automation",
+      "slug": "academic-article-automation",
+      "description": "A source-based writing system where local LLMs draft academic-style articles from provided references. Tags: local LLM, automation, research, writing.",
+      "status": "Testing",
       "relatedLink": "",
       "order": 20,
       "visible": true
     },
     {
       "id": "ex-3",
-      "title": "Movie and Music API Integrations",
-      "slug": "movie-music-api-integrations",
-      "description": "Pulling metadata from IMDb and music sources into Cinema and Radio.",
-      "status": "Active",
+      "title": "Local LLM Research Assistant",
+      "slug": "local-llm-research-assistant",
+      "description": "A focused tool for reading, summarizing, and cross-linking notes, running fully on local models. Tags: local LLM, research, Qwen, Gemma.",
+      "status": "Testing",
       "relatedLink": "",
       "order": 30,
       "visible": true
     },
     {
       "id": "ex-4",
-      "title": "AI Research Assistant",
-      "slug": "ai-research-assistant",
-      "description": "A focused tool for reading, summarizing, and cross-linking notes.",
+      "title": "Local LLM Discord Agent",
+      "slug": "local-llm-discord-agent",
+      "description": "A small assistant that lives in Discord and answers against a local model. Tags: local LLM, Discord, agent, automation.",
       "status": "Planned",
       "relatedLink": "",
       "order": 40,
@@ -178,31 +197,83 @@
     },
     {
       "id": "ex-5",
-      "title": "Automation Dashboard",
-      "slug": "automation-dashboard",
-      "description": "A single board for personal scripts, schedulers, and small services.",
-      "status": "Planned",
+      "title": "Personal Blog CMS",
+      "slug": "personal-blog-cms",
+      "description": "The admin surface that powers this site, so content is editable without touching code. Tags: Next.js, admin, content, local-first.",
+      "status": "Active",
       "relatedLink": "",
       "order": 50,
       "visible": true
     },
     {
       "id": "ex-6",
-      "title": "GPU Testing Lab",
-      "slug": "gpu-testing-lab",
-      "description": "Benchmarking local inference and small training runs on the home rig.",
+      "title": "Multi-LLM Comparison Workspace",
+      "slug": "multi-llm-comparison-workspace",
+      "description": "A workspace to send the same prompt to multiple models and compare answers side by side. Tags: LLM, comparison, tooling, TypeScript.",
       "status": "Testing",
       "relatedLink": "",
       "order": 60,
       "visible": true
+    },
+    {
+      "id": "ex-7",
+      "title": "Automation Dashboard",
+      "slug": "automation-dashboard",
+      "description": "A single board for personal scripts, schedulers, and small services. Tags: automation, dashboard, tooling.",
+      "status": "Planned",
+      "relatedLink": "",
+      "order": 70,
+      "visible": true
     }
   ],
   "principles": [
-    { "id": "p-1", "text": "Ship fast, then clean.", "order": 10, "visible": true },
-    { "id": "p-2", "text": "AI first, but understand the code.", "order": 20, "visible": true },
-    { "id": "p-3", "text": "Prefer simple architecture.", "order": 30, "visible": true },
-    { "id": "p-4", "text": "Build small internal tools.", "order": 40, "visible": true },
-    { "id": "p-5", "text": "Design matters, but function comes first.", "order": 50, "visible": true },
-    { "id": "p-6", "text": "Keep personal projects alive.", "order": 60, "visible": true }
+    {
+      "id": "p-1",
+      "text": "Ship fast, then clean. Get it working, then improve the structure.",
+      "order": 10,
+      "visible": true
+    },
+    {
+      "id": "p-2",
+      "text": "AI first, but understand the code. I don't merge what I can't explain.",
+      "order": 20,
+      "visible": true
+    },
+    {
+      "id": "p-3",
+      "text": "Prefer simple architecture over clever architecture.",
+      "order": 30,
+      "visible": true
+    },
+    {
+      "id": "p-4",
+      "text": "Build tools I actually use, not demos.",
+      "order": 40,
+      "visible": true
+    },
+    {
+      "id": "p-5",
+      "text": "Make content admin-editable instead of hardcoded when possible.",
+      "order": 50,
+      "visible": true
+    },
+    {
+      "id": "p-6",
+      "text": "Local-first when it makes sense; reach for the cloud when it doesn't.",
+      "order": 60,
+      "visible": true
+    },
+    {
+      "id": "p-7",
+      "text": "Design matters, but function comes first.",
+      "order": 70,
+      "visible": true
+    },
+    {
+      "id": "p-8",
+      "text": "Keep personal projects alive instead of starting new ones.",
+      "order": 80,
+      "visible": true
+    }
   ]
 }
