@@ -7,7 +7,7 @@ export default function CinemaPage() {
   const entries = getAllCinemaEntries();
 
   return (
-    <PageShell width="wide">
+    <PageShell width="wide" wallpaper="cinema">
       <PageHeader
         eyebrow="Cinema"
         title="Movies and TV, rated personally"

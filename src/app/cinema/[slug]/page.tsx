@@ -26,7 +26,7 @@ export default async function CinemaDetailPage({
   if (!entry) notFound();
 
   return (
-    <PageShell width="wide">
+    <PageShell width="wide" wallpaper="cinema">
       <BackButton href="/cinema" />
 
       <article className="mt-10 grid gap-10 lg:grid-cols-[320px_minmax(0,1fr)] lg:items-start">

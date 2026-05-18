@@ -25,7 +25,7 @@ export default async function PodcastEpisodePage({
   if (!embedUrl) notFound();
 
   return (
-    <PageShell width="wide">
+    <PageShell width="wide" wallpaper="podcast">
         <BackButton href="/podcast" />
 
         <header className="mt-8">

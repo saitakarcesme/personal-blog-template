@@ -24,7 +24,7 @@ export default async function EngineeringCategoryPage({
   const items = getItemsForCategory(categorySlug);
 
   return (
-    <PageShell width="wide" className="flex flex-col gap-10">
+    <PageShell width="wide" wallpaper="engineering" className="flex flex-col gap-10">
       <div>
         <div className="mb-6">
           <BackButton href="/engineering" />

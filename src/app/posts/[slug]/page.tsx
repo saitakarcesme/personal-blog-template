@@ -19,7 +19,7 @@ export default async function PostPage({
   if (!post) notFound();
 
   return (
-    <PageShell>
+    <PageShell wallpaper="blog">
         <BackButton href="/blog" />
 
         <header className="mt-12 mb-16 text-center">

@@ -10,7 +10,7 @@ export default function ProfilePage() {
   );
 
   return (
-    <PageShell width="wide">
+    <PageShell width="wide" wallpaper="profile">
       <PageHeader
         eyebrow="Profile"
         title="Ibrahim Sait Akarcesme"

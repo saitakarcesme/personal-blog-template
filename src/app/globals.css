@@ -40,9 +40,87 @@
 
 body {
   min-height: 100dvh;
+  overflow-x: clip;
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+}
+
+.section-wallpaper {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  color: rgba(232, 232, 232, 0.72);
+}
+
+.section-wallpaper::before {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(circle at 72% 10%, rgba(255, 255, 255, 0.05), transparent 32%),
+    radial-gradient(circle at 20% 46%, rgba(255, 255, 255, 0.035), transparent 34%);
+  content: "";
+}
+
+.section-wallpaper::after {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, var(--background) 0%, transparent 14%, transparent 86%, var(--background) 100%),
+    linear-gradient(180deg, rgba(17, 17, 17, 0.08) 0%, rgba(17, 17, 17, 0.28) 52%, var(--background) 100%);
+  content: "";
+}
+
+.section-wallpaper__svg {
+  position: absolute;
+  top: -18px;
+  left: 50%;
+  width: max(1280px, 128vw);
+  height: max(900px, 100%);
+  opacity: 0.52;
+  transform: translateX(-50%);
+}
+
+.section-wallpaper--blog .section-wallpaper__svg {
+  opacity: 0.56;
+}
+
+.section-wallpaper--podcast .section-wallpaper__svg,
+.section-wallpaper--radio .section-wallpaper__svg,
+.section-wallpaper--cinema .section-wallpaper__svg {
+  opacity: 0.48;
+}
+
+.section-wallpaper--engineering .section-wallpaper__svg,
+.section-wallpaper--profile .section-wallpaper__svg {
+  opacity: 0.5;
+}
+
+@media (max-width: 640px) {
+  .section-wallpaper__svg {
+    left: 56%;
+    width: max(1120px, 260vw);
+    opacity: 0.43;
+  }
+
+  .section-wallpaper--blog .section-wallpaper__svg {
+    left: 48%;
+    opacity: 0.48;
+  }
+
+  .section-wallpaper--podcast .section-wallpaper__svg,
+  .section-wallpaper--engineering .section-wallpaper__svg {
+    left: 42%;
+    opacity: 0.46;
+  }
+
+  .section-wallpaper::after {
+    background:
+      linear-gradient(90deg, var(--background) 0%, transparent 18%, transparent 82%, var(--background) 100%),
+      linear-gradient(180deg, rgba(17, 17, 17, 0.18) 0%, rgba(17, 17, 17, 0.36) 46%, var(--background) 100%);
+  }
 }
 
 /* Hide scrollbar while keeping scroll behavior */

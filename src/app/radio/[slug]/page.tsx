@@ -27,7 +27,7 @@ export default async function RadioDetailPage({
   if (!entry) notFound();
 
   return (
-    <PageShell width="wide">
+    <PageShell width="wide" wallpaper="radio">
       <BackButton href="/radio" />
 
       <article className="mt-10 grid gap-10 lg:grid-cols-[320px_minmax(0,1fr)] lg:items-start">

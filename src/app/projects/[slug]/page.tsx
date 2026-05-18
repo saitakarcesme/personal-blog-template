@@ -19,7 +19,7 @@ export default async function ProjectPage({
   if (!project) notFound();
 
   return (
-    <PageShell>
+    <PageShell wallpaper="projects">
         <BackButton href="/projects" />
 
         <header className="mt-12 mb-16 text-center">

@@ -7,7 +7,7 @@ export default function PodcastPage() {
   const episodes = [...podcastEpisodes].sort((a, b) => a.episode - b.episode);
 
   return (
-    <PageShell>
+    <PageShell wallpaper="podcast">
       <PageHeader
         eyebrow="Podcast"
         title="All episodes"

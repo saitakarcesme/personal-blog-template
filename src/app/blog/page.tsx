@@ -7,7 +7,7 @@ export default function BlogPage() {
   const posts = getAllPosts();
 
   return (
-    <PageShell>
+    <PageShell wallpaper="blog">
       <PageHeader
         eyebrow="Blog"
         title="All posts"

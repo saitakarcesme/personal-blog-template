@@ -7,7 +7,7 @@ export default function RadioPage() {
   const entries = getAllRadioEntries();
 
   return (
-    <PageShell width="wide">
+    <PageShell width="wide" wallpaper="radio">
       <PageHeader
         eyebrow="Radio"
         title="Songs, albums, and playlists I keep returning to"

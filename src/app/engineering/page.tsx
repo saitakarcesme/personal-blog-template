@@ -60,7 +60,7 @@ export default function EngineeringPage() {
   const counts = countItemsByCategory();
 
   return (
-    <PageShell width="wide" className="flex flex-col gap-14">
+    <PageShell width="wide" wallpaper="engineering" className="flex flex-col gap-14">
       <PageHeader
         eyebrow={hero.label || "Engineering"}
         title={hero.title || "Engineering"}

@@ -7,7 +7,7 @@ export default function ProjectsPage() {
   const projects = getAllProjects();
 
   return (
-    <PageShell>
+    <PageShell width="wide" wallpaper="projects">
       <PageHeader
         eyebrow="Projects"
         title="All projects"
