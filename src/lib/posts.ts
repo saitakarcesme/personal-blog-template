@@ -22,6 +22,7 @@ export type PostListItem = {
   excerpt: string;
   hasMore: boolean;
   coverImage?: string | null;
+  readingTimeMinutes: number;
 };
 
 export type PostDetail = {
@@ -30,6 +31,16 @@ export type PostDetail = {
   date: string;
   author?: string;
   html: string;
+  readingTimeMinutes: number;
+};
+
+export type PostSearchEntry = {
+  slug: string;
+  title: string;
+  date: string;
+  author?: string;
+  excerpt: string;
+  text: string;
 };
 
 const postsDir = path.join(process.cwd(), "data", "posts");
@@ -72,6 +83,15 @@ function extractFirstImage(markdownContent: string): string | null {
   return match ? match[1] : null;
 }
 
+const WORDS_PER_MINUTE = 200;
+
+export function estimateReadingTimeMinutes(markdownContent: string): number {
+  const plain = toPlainText(markdownContent);
+  if (!plain) return 1;
+  const wordCount = plain.split(/\s+/).filter(Boolean).length;
+  return Math.max(1, Math.round(wordCount / WORDS_PER_MINUTE));
+}
+
 export function getAllPosts(): PostListItem[] {
   const slugs = getPostSlugs();
 
@@ -88,8 +108,9 @@ export function getAllPosts(): PostListItem[] {
       const author = fm.author;
       const { excerpt, hasMore } = buildExcerpt(content);
       const coverImage = fm.image || extractFirstImage(content);
+      const readingTimeMinutes = estimateReadingTimeMinutes(content);
 
-      return { slug, title, date, author, excerpt, hasMore, coverImage };
+      return { slug, title, date, author, excerpt, hasMore, coverImage, readingTimeMinutes };
     })
     .sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
 
@@ -115,6 +136,32 @@ export async function getPostDetail(slug: string): Promise<PostDetail | null> {
     date: fm.date ?? "1970-01-01",
     author: fm.author,
     html: processed.toString(),
+    readingTimeMinutes: estimateReadingTimeMinutes(content),
   };
+}
+
+export function getAllPostsForSearch(): PostSearchEntry[] {
+  const slugs = getPostSlugs();
+
+  return slugs
+    .map((fileName) => {
+      const slug = getPostSlugFromFileName(fileName);
+      const fullPath = path.join(postsDir, fileName);
+      const file = fs.readFileSync(fullPath, "utf8");
+      const { data, content } = matter(file);
+      const fm = data as Partial<PostFrontmatter>;
+
+      const { excerpt } = buildExcerpt(content, 240);
+
+      return {
+        slug,
+        title: fm.title ?? slug,
+        date: fm.date ?? "1970-01-01",
+        author: fm.author,
+        excerpt,
+        text: toPlainText(content),
+      };
+    })
+    .sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0));
 }
 

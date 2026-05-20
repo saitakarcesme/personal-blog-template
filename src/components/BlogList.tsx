@@ -34,7 +34,11 @@ export function BlogList({ posts, limitOnMobile }: { posts: PostListItem[]; limi
                   </h3>
                 </div>
                 <div className="shrink-0 text-xs tabular-nums text-text-subtle font-medium">
-                  <time>{post.date}</time>
+                  <div className="flex items-center gap-2">
+                    <time>{post.date}</time>
+                    <span aria-hidden="true" className="h-1 w-1 rounded-full bg-border" />
+                    <span>{post.readingTimeMinutes} min read</span>
+                  </div>
                   {post.author && (
                     <div className="mt-0.5">{post.author}</div>
                   )}

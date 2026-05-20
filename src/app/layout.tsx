@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import { CursorDots } from "@/components/CursorDots";
+import { SearchOverlay } from "@/components/SearchOverlay";
 import { SiteHeader } from "@/components/SiteHeader";
 import "./globals.css";
 
@@ -30,6 +31,7 @@ export default function RootLayout({
       <body suppressHydrationWarning className="antialiased">
         <SiteHeader />
         {children}
+        <SearchOverlay />
         <CursorDots />
       </body>
     </html>

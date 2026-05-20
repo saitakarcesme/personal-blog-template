@@ -28,6 +28,8 @@ export default async function PostPage({
           </h1>
           <div className="mt-6 text-sm font-medium text-text-subtle uppercase tracking-widest flex items-center justify-center gap-3">
             <span>{post.date}</span>
+            <span className="w-1 h-1 rounded-full bg-border"></span>
+            <span>{post.readingTimeMinutes} min read</span>
             {post.author && (
               <>
                 <span className="w-1 h-1 rounded-full bg-border"></span>
