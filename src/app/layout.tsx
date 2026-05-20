@@ -1,18 +1,15 @@
 import type { Metadata } from "next";
-import { Geist, Newsreader } from "next/font/google";
+import localFont from "next/font/local";
 import { CursorDots } from "@/components/CursorDots";
 import { SiteHeader } from "@/components/SiteHeader";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const newsreader = Newsreader({
-  variable: "--font-newsreader",
-  subsets: ["latin"],
-  style: ["normal", "italic"],
+const solidMono = localFont({
+  variable: "--font-solid-mono",
+  display: "swap",
+  src: [
+    { path: "./fonts/Solid-Mono.ttf", weight: "400", style: "normal" },
+  ],
 });
 
 export const metadata: Metadata = {
@@ -29,11 +26,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        suppressHydrationWarning
-        className={`${geistSans.variable} ${newsreader.variable} antialiased`}
-      >
+    <html lang="en" className={solidMono.variable}>
+      <body suppressHydrationWarning className="antialiased">
         <SiteHeader />
         {children}
         <CursorDots />

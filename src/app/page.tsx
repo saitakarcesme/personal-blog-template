@@ -51,7 +51,7 @@ export default function Home() {
   const stats = [
     { label: "Posts", value: getPostSlugs().length },
     { label: "Projects", value: getProjectSlugs().length },
-    { label: "Podcast Episodes", value: podcastEpisodes.length },
+    { label: "Podcasts", value: podcastEpisodes.length },
     { label: "Photos", value: albumPhotos.length },
     { label: "Cinema", value: getCinemaSlugs().length },
     { label: "Radio", value: getRadioSlugs().length },
