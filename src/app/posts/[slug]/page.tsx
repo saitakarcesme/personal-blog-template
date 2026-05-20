@@ -1,5 +1,6 @@
 import { BackButton } from "@/components/BackButton";
 import { PageShell } from "@/components/PageShell";
+import { ReadingProgress } from "@/components/ReadingProgress";
 import { getPostDetail, getPostSlugs, getPostSlugFromFileName } from "@/lib/posts";
 import { notFound } from "next/navigation";
 
@@ -20,6 +21,7 @@ export default async function PostPage({
 
   return (
     <PageShell wallpaper="blog">
+        <ReadingProgress />
         <BackButton href="/blog" />
 
         <header className="mt-12 mb-16 text-center">
