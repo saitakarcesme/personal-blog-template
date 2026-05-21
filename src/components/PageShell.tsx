@@ -1,4 +1,4 @@
-import type { ReactNode } from "react";
+import { Children, type CSSProperties, type ReactNode } from "react";
 import {
   SectionWallpaper,
   type SectionWallpaperTheme,
@@ -17,6 +17,18 @@ export function PageShell({
 }) {
   const maxWidth = width === "wide" ? "max-w-5xl" : "max-w-3xl";
 
+  const revealed = Children.map(children, (child, index) => {
+    if (child === null || child === undefined || typeof child === "boolean") {
+      return child;
+    }
+    const delay = `${Math.min(index, 5) * 70}ms`;
+    return (
+      <div data-reveal style={{ "--reveal-delay": delay } as CSSProperties}>
+        {child}
+      </div>
+    );
+  });
+
   return (
     <main
       className="relative isolate min-h-[calc(100dvh-5rem)] w-full overflow-hidden text-foreground"
@@ -27,7 +39,7 @@ export function PageShell({
           className ?? ""
         }`}
       >
-        {children}
+        {revealed}
       </div>
     </main>
   );
