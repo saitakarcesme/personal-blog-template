@@ -33,7 +33,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={solidMono.variable}>
+    <html lang="en" suppressHydrationWarning className={solidMono.variable}>
       <body suppressHydrationWarning className="antialiased">
         <script dangerouslySetInnerHTML={{ __html: bootScript }} />
         <SplashScreen />
