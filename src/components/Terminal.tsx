@@ -248,18 +248,18 @@ export function Terminal({
   return (
     <>
       {/* Mobile notice */}
-      <div className="flex min-h-[100dvh] items-center justify-center bg-black px-6 text-center font-mono text-sm text-green-400 md:hidden">
+      <div className="flex h-[100dvh] items-center justify-center bg-black px-6 text-center font-mono text-sm text-green-400 md:hidden">
         Terminal is best experienced on desktop.
       </div>
 
       {/* Terminal */}
       <div
         onClick={focusInput}
-        className="hidden min-h-[100dvh] cursor-text bg-black font-mono text-sm leading-relaxed text-green-400 selection:bg-green-400/30 md:block"
+        className="fixed inset-0 hidden cursor-text flex-col bg-black font-mono text-sm leading-relaxed text-green-400 selection:bg-green-400/30 md:flex"
       >
         <div
           ref={scrollRef}
-          className="mx-auto h-[100dvh] max-w-4xl overflow-y-auto px-4 py-6 sm:px-6"
+          className="mx-auto w-full max-w-4xl flex-1 overflow-y-auto px-4 py-6 sm:px-6"
         >
           {lines.map((line, i) => (
             <div
