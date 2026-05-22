@@ -5,6 +5,7 @@ import { ScrollReveal } from "@/components/ScrollReveal";
 import { SearchOverlay } from "@/components/SearchOverlay";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SplashScreen } from "@/components/SplashScreen";
+import { TerminalHotkey } from "@/components/TerminalHotkey";
 import "./globals.css";
 
 // Runs before paint: hide the splash for returning sessions and arm the
@@ -41,6 +42,7 @@ export default function RootLayout({
         {children}
         <SearchOverlay />
         <ScrollReveal />
+        <TerminalHotkey />
         <CursorDots />
       </body>
     </html>

@@ -43,6 +43,8 @@ export function SiteHeader() {
     window.dispatchEvent(new Event(SEARCH_OPEN_EVENT));
   }
 
+  if (pathname === "/terminal") return null;
+
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/90 backdrop-blur">
       <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-4 sm:min-h-16 sm:flex-row sm:items-center sm:justify-between sm:px-6 sm:py-0 lg:px-8">

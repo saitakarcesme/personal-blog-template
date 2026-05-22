@@ -181,6 +181,20 @@ h6 {
   contain-intrinsic-size: 180px;
 }
 
+/* Terminal blinking cursor */
+@keyframes terminal-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+.terminal-cursor {
+  animation: terminal-blink 1s steps(1) infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .terminal-cursor {
+    animation: none;
+  }
+}
+
 /* ---- Scroll-triggered reveal ---- */
 @media (prefers-reduced-motion: no-preference) {
   html.reveal-ready [data-reveal] {
