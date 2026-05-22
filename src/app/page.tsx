@@ -45,6 +45,11 @@ const destinations = [
     title: "Profile",
     description: "About me, social links, Tetris, and the album.",
   },
+  {
+    href: "/terminal",
+    title: "Terminal",
+    description: "An interactive command line for the site. Press ⌘⇧P anywhere.",
+  },
 ];
 
 export default function Home() {
