@@ -4,8 +4,6 @@ date: "2026-05-25"
 author: "ISA"
 ---
 
-
-![ChatGPT Image May 25, 2026, 04_37_17 PM.png](/media/1779719854725-chatgpt-image-may-25-2026-04_37_17-pm.png)
 Today I want to talk about something that looks very simple at first, but I think it affects almost every part of life more than we realise.
 
 The idea is this:
