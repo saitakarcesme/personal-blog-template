@@ -20,12 +20,12 @@ export default async function AlbumPhotoPage({ params }: { params: Promise<{ id:
   return (
     <div className="min-h-dvh flex flex-col items-center bg-background text-foreground pt-24 pb-16 px-4 fade-in">
       <div className="w-full max-w-4xl flex flex-col gap-6">
-        <Link 
-          href="/" 
+        <Link
+          href="/album"
           className="group inline-flex items-center gap-2 text-sm font-semibold text-text-subtle hover:text-text-main transition-colors w-fit"
         >
           <FiArrowLeft className="group-hover:-translate-x-1 transition-transform" />
-          Back to Home
+          Back to Album
         </Link>
 
         <div className="bg-surface border border-border rounded-2xl overflow-hidden shadow-lg">
